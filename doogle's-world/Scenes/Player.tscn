@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://drbj4ucipnhwi"]
+
+[ext_resource type="Script" uid="uid://brri06vk5dwa0" path="res://Scenes/player.gd" id="1_kyqiw"]
+[ext_resource type="ArrayMesh" uid="uid://b5x0qgru8rf4o" path="res://Assets/AnimCharacter.obj" id="1_rpqav"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kyqiw"]
+radius = 0.76171875
+height = 2.909729
+
+[node name="Player" type="CharacterBody3D" unique_id=646272981]
+script = ExtResource("1_kyqiw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=487269395]
+transform = Transform3D(1, 0, 0, 0, 0.54142153, 0, 0, 0, 1, 0.095005035, 0.9748348, 0)
+mesh = ExtResource("1_rpqav")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=43280144]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4423273, 0)
+shape = SubResource("CapsuleShape3D_kyqiw")
+
+[node name="FirstPersonView" type="Node3D" parent="." unique_id=317257802]
+transform = Transform3D(1, 0, 0, 0, 0.71561396, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="FPVCamera" type="Camera3D" parent="FirstPersonView" unique_id=1631609081]
+transform = Transform3D(1, 0, 0, 0, 1.3974015, 0, 0, 0, 1, 0, 3.370365, -0.24892426)
+near = 0.518
+
+[node name="CameraController" type="Node3D" parent="." unique_id=1829708227]
+top_level = true
+
+[node name="CameraTarget" type="Node3D" parent="CameraController" unique_id=743507949]
+transform = Transform3D(0.70710677, -0.24763401, 0.6623273, 0, 0.9366722, 0.3502074, -0.70710677, -0.24763401, 0.6623273, 4, 4, 4)
+
+[node name="OverheadCamera" type="Camera3D" parent="CameraController/CameraTarget" unique_id=1887439272]
+current = true
+fov = 40.0

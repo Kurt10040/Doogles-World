@@ -1,3 +1,54 @@
 [gd_scene format=3 uid="uid://dhlxoup6co2ug"]
 
+[ext_resource type="PackedScene" uid="uid://drbj4ucipnhwi" path="res://Scenes/Player.tscn" id="1_jjgbg"]
+[ext_resource type="Shader" uid="uid://dccu63op1h05a" path="res://Assets/Shaders/main.gdshader" id="2_bo1nx"]
+
+[sub_resource type="Environment" id="Environment_jjgbg"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_bo1nx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jjgbg"]
+size = Vector3(6.817383, 1, 7.9101563)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bo1nx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bo1nx"]
+albedo_color = Color(1, 0.6446667, 0.18, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8gbba"]
+shader = ExtResource("2_bo1nx")
+shader_parameter/target_color = Color(1, 1, 1, 1)
+
 [node name="Main" type="Node3D" unique_id=1439304250]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1210974854]
+environment = SubResource("Environment_jjgbg")
+camera_attributes = SubResource("CameraAttributesPractical_bo1nx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=520581263]
+transform = Transform3D(0.7871138, 0.23112799, 0.57186687, -0.35609037, -0.58675665, 0.7272664, 0.50363827, -0.7760776, -0.37954178, 0, 4.9368267, 0)
+
+[node name="Player" parent="." unique_id=646272981 instance=ExtResource("1_jjgbg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8587012, 0, 1.077965)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1202952117]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1845954113]
+shape = SubResource("BoxShape3D_jjgbg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1347491470]
+transform = Transform3D(6.6541, 0, 0, 0, 1, 0, 0, 0, 7.858433, 0, 0, 0)
+mesh = SubResource("BoxMesh_bo1nx")
+surface_material_override/0 = SubResource("StandardMaterial3D_bo1nx")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=499165870]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=530206109]
+material = SubResource("ShaderMaterial_8gbba")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
