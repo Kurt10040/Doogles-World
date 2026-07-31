@@ -1,14 +1,16 @@
 extends CharacterBody3D
 
 
+@onready var interact_component = $InteractComponent
+
 const SPEED = 3.0
 const JUMP_VELOCITY = 4.5
 const navigation_speed = 1.0
 
+func _ready() -> void:
+	Global.set_player_ref(self)
+
 func _physics_process(delta: float) -> void:
-
-
-
 	# Gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta

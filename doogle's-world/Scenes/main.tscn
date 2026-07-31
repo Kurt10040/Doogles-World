@@ -1,7 +1,12 @@
 [gd_scene format=3 uid="uid://dhlxoup6co2ug"]
 
 [ext_resource type="PackedScene" uid="uid://drbj4ucipnhwi" path="res://Scenes/Player.tscn" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://cesq0p027yb7f" path="res://Interaction/Interaction Area/interactable.tscn" id="2_8gbba"]
 [ext_resource type="Shader" uid="uid://dccu63op1h05a" path="res://Assets/Shaders/main.gdshader" id="2_bo1nx"]
+[ext_resource type="Script" uid="uid://bf0qke6kcerjq" path="res://Scripts/static_body_3d_2.gd" id="2_jjvhh"]
+[ext_resource type="Script" uid="uid://cg8uohyvj7dlr" path="res://Scripts/ball_2.gd" id="4_kry3j"]
+[ext_resource type="PackedScene" uid="uid://beqdg5jc71hmf" path="res://Scenes/inventory_item.tscn" id="7_6bp64"]
+[ext_resource type="Script" uid="uid://b8c7dh81pseph" path="res://Scripts/stats.gd" id="7_344ge"]
 
 [sub_resource type="Environment" id="Environment_jjgbg"]
 
@@ -15,9 +20,57 @@ size = Vector3(6.817383, 1, 7.9101563)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bo1nx"]
 albedo_color = Color(1, 0.6446667, 0.18, 1)
 
+[sub_resource type="SphereMesh" id="SphereMesh_bo1nx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jjvhh"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kry3j"]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8gbba"]
 shader = ExtResource("2_bo1nx")
 shader_parameter/target_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6bp64"]
+
+[sub_resource type="Resource" id="Resource_344ge"]
+script = ExtResource("7_344ge")
+item_name = "Skibbs"
+item_mass = 0.5
+item_efficacy = 1
+item_enchantment = "None"
+item_mesh = SubResource("CapsuleMesh_6bp64")
+base_heat = 14.0
+base_stability = 0.88
+base_volatility = 0.2
+base_density = 2.2
+base_conductivity = 0.7
+base_purity = 0.67
+base_strength = 7
+base_acidity = 8
+metadata/_custom_type_script = "uid://b8c7dh81pseph"
+
+[sub_resource type="TorusMesh" id="TorusMesh_6bp64"]
+
+[sub_resource type="Resource" id="Resource_ynf5e"]
+script = ExtResource("7_344ge")
+item_name = "Slebbs"
+item_type = 5
+item_class = 3
+item_rarity = 5
+item_mass = 14.0
+item_is_shiny = true
+item_efficacy = 6
+item_enchantment = "Healing"
+item_mesh = SubResource("TorusMesh_6bp64")
+base_heat = 0.33
+base_stability = 0.97
+base_volatility = 0.06
+base_density = 60.0
+base_conductivity = 0.01
+base_purity = 0.99
+base_strength = 2000
+base_acidity = 13
+metadata/_custom_type_script = "uid://b8c7dh81pseph"
 
 [node name="Main" type="Node3D" unique_id=1439304250]
 
@@ -26,20 +79,55 @@ environment = SubResource("Environment_jjgbg")
 camera_attributes = SubResource("CameraAttributesPractical_bo1nx")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=520581263]
-transform = Transform3D(0.7871138, 0.23112799, 0.57186687, -0.35609037, -0.58675665, 0.7272664, 0.50363827, -0.7760776, -0.37954178, 0, 4.9368267, 0)
+transform = Transform3D(-0.41787115, 0.8233048, 0.38412604, -0.3219871, -0.52957565, 0.7847764, 0.84953386, 0.20425183, 0.48638797, 0, 4.937, 0)
+shadow_enabled = true
 
 [node name="Player" parent="." unique_id=646272981 instance=ExtResource("1_jjgbg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8587012, 0, 1.077965)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8587012, 1.1370068, 1.077965)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1202952117]
+[node name="floor" type="StaticBody3D" parent="." unique_id=1202952117]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1845954113]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor" unique_id=1845954113]
 shape = SubResource("BoxShape3D_jjgbg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1347491470]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floor" unique_id=1347491470]
 transform = Transform3D(6.6541, 0, 0, 0, 1, 0, 0, 0, 7.858433, 0, 0, 0)
 mesh = SubResource("BoxMesh_bo1nx")
 surface_material_override/0 = SubResource("StandardMaterial3D_bo1nx")
+
+[node name="ball" type="StaticBody3D" parent="." unique_id=1740367161]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.31, -1.831)
+script = ExtResource("2_jjvhh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ball" unique_id=1607689267]
+mesh = SubResource("SphereMesh_bo1nx")
+
+[node name="Interactable" parent="ball" unique_id=716970301 instance=ExtResource("2_8gbba")]
+interact_name = "[E] to Touch ball"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ball/Interactable" unique_id=1577746523]
+transform = Transform3D(4.5, 0, 0, 0, 4.5, 0, 0, 0, 4.5, 0, 0, 0)
+shape = SubResource("SphereShape3D_jjvhh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ball" unique_id=2066970803]
+shape = SubResource("SphereShape3D_kry3j")
+
+[node name="ball2" type="StaticBody3D" parent="." unique_id=592539074]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.802232, 1.31, -0.6223446)
+script = ExtResource("4_kry3j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ball2" unique_id=1121035623]
+mesh = SubResource("SphereMesh_bo1nx")
+
+[node name="Interactable" parent="ball2" unique_id=1362504653 instance=ExtResource("2_8gbba")]
+interact_name = "[E] to Touch other ball"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ball2/Interactable" unique_id=521751340]
+transform = Transform3D(4.5, 0, 0, 0, 4.5, 0, 0, 0, 4.5, 0, 0, 0)
+shape = SubResource("SphereShape3D_jjvhh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ball2" unique_id=1936186645]
+shape = SubResource("SphereShape3D_kry3j")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=499165870]
 visible = false
@@ -52,3 +140,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Inventory_item" parent="." unique_id=52105520 instance=ExtResource("7_6bp64")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.802232, 1.31, 2.2172227)
+stats = SubResource("Resource_344ge")
+
+[node name="Inventory_item2" parent="." unique_id=256383570 instance=ExtResource("7_6bp64")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45155096, 1.31, 3.3178315)
+stats = SubResource("Resource_ynf5e")

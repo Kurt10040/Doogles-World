@@ -1,13 +1,16 @@
 [gd_scene format=3 uid="uid://drbj4ucipnhwi"]
 
-[ext_resource type="Script" uid="uid://brri06vk5dwa0" path="res://Scenes/player.gd" id="1_kyqiw"]
+[ext_resource type="Script" uid="uid://brri06vk5dwa0" path="res://Scripts/player.gd" id="1_kyqiw"]
 [ext_resource type="ArrayMesh" uid="uid://b5x0qgru8rf4o" path="res://Assets/AnimCharacter.obj" id="1_rpqav"]
+[ext_resource type="PackedScene" uid="uid://4iar7xi41ad" path="res://Interaction/Interaction Area/interact_component.tscn" id="3_gntrk"]
+[ext_resource type="Script" uid="uid://d270e57odyil2" path="res://Scripts/hud.gd" id="4_dewec"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kyqiw"]
 radius = 0.76171875
 height = 2.909729
 
-[node name="Player" type="CharacterBody3D" unique_id=646272981]
+[node name="Player" type="CharacterBody3D" unique_id=646272981 groups=["Player"]]
+collision_layer = 2
 script = ExtResource("1_kyqiw")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=487269395]
@@ -20,6 +23,7 @@ shape = SubResource("CapsuleShape3D_kyqiw")
 
 [node name="FirstPersonView" type="Node3D" parent="." unique_id=317257802]
 transform = Transform3D(1, 0, 0, 0, 0.71561396, 0, 0, 0, 1, 0, 0, 0)
+visible = false
 
 [node name="FPVCamera" type="Camera3D" parent="FirstPersonView" unique_id=1631609081]
 transform = Transform3D(1, 0, 0, 0, 1.3974015, 0, 0, 0, 1, 0, 3.370365, -0.24892426)
@@ -29,8 +33,32 @@ near = 0.518
 top_level = true
 
 [node name="CameraTarget" type="Node3D" parent="CameraController" unique_id=743507949]
-transform = Transform3D(0.70710677, -0.24763401, 0.6623273, 0, 0.9366722, 0.3502074, -0.70710677, -0.24763401, 0.6623273, 4, 4, 4)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 10, 10)
 
 [node name="OverheadCamera" type="Camera3D" parent="CameraController/CameraTarget" unique_id=1887439272]
 current = true
 fov = 40.0
+size = 15.0
+
+[node name="InteractComponent" parent="." unique_id=1449710650 instance=ExtResource("3_gntrk")]
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=493530984]
+script = ExtResource("4_dewec")
+
+[node name="InteractionPrompt" type="Label" parent="HUD" unique_id=943510861]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.5
+offset_top = 49.35
+offset_right = 52.5
+offset_bottom = 72.35004
+grow_horizontal = 2
+size_flags_horizontal = 8
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 31
+text = "[E] to interact"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[editable path="InteractComponent"]

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://beqdg5jc71hmf"]
+
+[ext_resource type="Script" uid="uid://tt1lm0gk7eb3" path="res://Scripts/inventory_item.gd" id="1_giout"]
+[ext_resource type="PackedScene" uid="uid://cesq0p027yb7f" path="res://Interaction/Interaction Area/interactable.tscn" id="2_gj4io"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hehin"]
+
+[node name="Inventory_item" type="Node3D" unique_id=52105520 groups=["Items"]]
+script = ExtResource("1_giout")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1581782958]
+transform = Transform3D(0.43, 0, 0, 0, 0.43, 0, 0, 0, 0.43, 0, 0, 0)
+
+[node name="Interactable" parent="." unique_id=716970301 instance=ExtResource("2_gj4io")]
+interact_name = "[E] to pick up item"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable" unique_id=1012640809]
+shape = SubResource("SphereShape3D_hehin")
