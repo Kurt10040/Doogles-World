@@ -1,6 +1,7 @@
 extends Resource
 class_name Stats
 
+# Item Rarities
 enum ItemRarity {
 	JUNK,
 	COMMON,
@@ -10,6 +11,7 @@ enum ItemRarity {
 	DIVINE,
 	SECRET
 }
+# Item Classes
 enum ItemClass {
 	ORGANIC,
 	ORE,
@@ -21,6 +23,7 @@ enum ItemClass {
 	WEARABLE,
 	TROPHY
 }
+# Item Types
 enum ItemType {
 	PLANT,
 	METAL,
@@ -32,6 +35,7 @@ enum ItemType {
 	CREATURE_DROPS
 }
 
+# Initialize editable stats about the item. These can be customised in the inspector or through a script.
 @export_group("Stats")
 @export var item_name: String
 @export var item_type: ItemType
@@ -44,7 +48,7 @@ enum ItemType {
 @export var item_mesh: Mesh
 @export var item_icon: Texture
 
-
+# Initialize editable properties of the item. These can be customised in the inspector or through a script.
 @export_group("Properties")
 @export var base_heat: float
 @export var base_stability: float

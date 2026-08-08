@@ -4,13 +4,17 @@
 [ext_resource type="ArrayMesh" uid="uid://b5x0qgru8rf4o" path="res://Assets/AnimCharacter.obj" id="1_rpqav"]
 [ext_resource type="PackedScene" uid="uid://4iar7xi41ad" path="res://Interaction/Interaction Area/interact_component.tscn" id="3_gntrk"]
 [ext_resource type="Script" uid="uid://d270e57odyil2" path="res://Scripts/hud.gd" id="4_dewec"]
+[ext_resource type="PackedScene" uid="uid://drg3dtfm2q0pw" path="res://Scenes/inventory_ui.tscn" id="5_5ixxa"]
+[ext_resource type="PackedScene" uid="uid://cljisgrv0dyd1" path="res://Scenes/inventory_hotbar.tscn" id="6_nn08x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kyqiw"]
 radius = 0.76171875
 height = 2.909729
 
 [node name="Player" type="CharacterBody3D" unique_id=646272981 groups=["Player"]]
+process_mode = 3
 collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_kyqiw")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=487269395]
@@ -42,6 +46,9 @@ size = 15.0
 
 [node name="InteractComponent" parent="." unique_id=1449710650 instance=ExtResource("3_gntrk")]
 
+[node name="CollisionShape3D" parent="InteractComponent/InteractRange" parent_id_path=PackedInt32Array(1449710650, 805042804) index="0" unique_id=1361382077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.140564, -0.055908203)
+
 [node name="HUD" type="CanvasLayer" parent="." unique_id=493530984]
 script = ExtResource("4_dewec")
 
@@ -60,5 +67,66 @@ theme_override_font_sizes/font_size = 31
 text = "[E] to interact"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="InventoryUI" type="CanvasLayer" parent="." unique_id=991075797]
+visible = false
+
+[node name="InventoryFrame" type="ColorRect" parent="InventoryUI" unique_id=430372669]
+custom_minimum_size = Vector2(800, 500)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.20060001, 0.26100668, 0.34, 0.6509804)
+
+[node name="Label" type="Label" parent="InventoryUI/InventoryFrame" unique_id=1935094627]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.5
+offset_right = 37.5
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 55
+text = "Inventory"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="inventory_UI" parent="InventoryUI/InventoryFrame" unique_id=1147371802 instance=ExtResource("5_5ixxa")]
+layout_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Menu" type="CanvasLayer" parent="." unique_id=593493335]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Menu" unique_id=845430286]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.15347233, 0.22453564, 0.29215977, 1)
+
+[node name="Label" type="Label" parent="Menu/ColorRect" unique_id=1316934172]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -221.5
+offset_right = 221.5
+offset_bottom = 143.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 67
+text = "Game Paused"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="InventoryHotbar" type="CanvasLayer" parent="." unique_id=2113458983]
+
+[node name="InventoryHotbar" parent="InventoryHotbar" unique_id=536894311 instance=ExtResource("6_nn08x")]
 
 [editable path="InteractComponent"]

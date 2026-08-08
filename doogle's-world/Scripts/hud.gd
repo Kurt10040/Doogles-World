@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 
+# Object references
 @onready var interaction_prompt: Label = $InteractionPrompt
 
 # Target function for the 'interact_prompt_change' signal. This function changes the text of the interaction label/prompt
