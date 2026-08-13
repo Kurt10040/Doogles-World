@@ -47,7 +47,7 @@ size = 15.0
 [node name="InteractComponent" parent="." unique_id=1449710650 instance=ExtResource("3_gntrk")]
 
 [node name="CollisionShape3D" parent="InteractComponent/InteractRange" parent_id_path=PackedInt32Array(1449710650, 805042804) index="0" unique_id=1361382077]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.140564, -0.055908203)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3070374, -0.055908203)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=493530984]
 script = ExtResource("4_dewec")

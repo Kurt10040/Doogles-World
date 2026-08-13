@@ -1,0 +1,14 @@
+[gd_resource type="TorusMesh" format=3 uid="uid://cr4rhghjxfc0x"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6bp64"]
+albedo_color = Color(0.7176471, 1, 0, 1)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(0.176, 0.66, 0, 1)
+emission_energy_multiplier = 14.3
+
+[resource]
+material = SubResource("StandardMaterial3D_6bp64")
+inner_radius = 0.181
+outer_radius = 0.865
+rings = 6

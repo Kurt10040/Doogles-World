@@ -23,7 +23,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_pressed("move_jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
@@ -47,7 +47,6 @@ func _input(event):
 	# Toggle inventory
 	if event.is_action_pressed("inventory"):
 		inventory_ui.visible = !inventory_ui.visible
-		get_tree().paused = !get_tree().paused
 	
 	# Toggle pause menu
 	if event.is_action_pressed("menu"):

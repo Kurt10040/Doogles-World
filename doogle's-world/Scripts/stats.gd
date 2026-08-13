@@ -36,20 +36,22 @@ enum ItemType {
 }
 
 # Initialize editable stats about the item. These can be customised in the inspector or through a script.
-@export_group("Stats")
-@export var item_name: String
-@export var item_type: ItemType
+@export_group("Identity")
+@export var name: String
+@export var type: ItemType
 @export var item_class: ItemClass
-@export var item_rarity:ItemRarity
-@export var item_mass: float
-@export var item_is_shiny: bool
-@export var item_efficacy: int
-@export var item_enchantment: String
-@export var item_mesh: Mesh
-@export var item_icon: Texture
+@export var rarity:ItemRarity
+
+@export var mass: float
+@export var is_shiny: bool
+@export var efficacy: int
+@export var enchantment: String
+
+@export var mesh: Mesh
+@export var icon: Texture
 
 # Initialize editable properties of the item. These can be customised in the inspector or through a script.
-@export_group("Properties")
+@export_group("Base Properties")
 @export var base_heat: float
 @export var base_stability: float
 @export var base_volatility: float
@@ -58,3 +60,84 @@ enum ItemType {
 @export var base_purity: float
 @export var base_strength: int
 @export var base_acidity: int
+@export var base_tags: Array[String] = []
+
+var heat: float
+var stability: float
+var volatility: float
+var density: float
+var conductivity: float
+var purity: float
+var strength: int
+var acidity: int
+var tags: Array[String] = []
+
+func set_identity(data:Dictionary):
+	name =        data["name"]
+	type =        data["type"]
+	item_class =  data["class"]
+	rarity =      data["rarity"]
+	
+	mass =        data["mass"]
+	is_shiny =    data["shiny"]
+	efficacy =    data["efficacy"]
+	enchantment = data["enchantment"]
+	
+	mesh =        data["mesh"]
+	icon =        data["icon"]
+
+func set_base_properties(data:Dictionary):
+	base_heat = data["base_heat"]
+	base_stability = data["base_stability"]
+	base_volatility = data["base_volatility"]
+	base_density = data["base_density"]
+	base_conductivity = data["base_conductivity"]
+	base_purity = data["base_purity"]
+	base_strength = data["base_strength"]
+	base_acidity = data["base_acidity"]
+	base_tags = data["base_tags"]
+
+func init_current_properties():
+	heat = base_heat
+	stability = base_stability
+	volatility = base_volatility
+	density = base_density
+	conductivity = base_conductivity
+	purity = base_purity
+	strength = base_strength
+	acidity = base_acidity
+	tags = base_tags
+
+func get_data_as_dict():
+	var data = {}
+	data["name"] = name
+	data["type"] = type
+	data["class"] = item_class
+	data["rarity"] = rarity
+	data["mass"] = mass
+	data["shiny"] = is_shiny
+	data["efficacy"] = efficacy
+	data["enchantment"] = enchantment
+	data["icon"] = icon
+	data["mesh"] = mesh
+	
+	data["base_heat:"] = base_heat
+	data["base_stability"] = base_stability
+	data["base_volatility"] = base_volatility
+	data["base_density"] = base_density
+	data["base_conductivity"] = base_conductivity
+	data["base_purity"] = base_purity
+	data["base_strength"] = base_strength
+	data["base_acidity"] = base_acidity
+	data["base_tags"] = base_tags
+	
+	data["heat:"] = heat
+	data["stability"] = stability
+	data["volatility"] = volatility
+	data["density"] = density
+	data["conductivity"] = conductivity
+	data["purity"] = purity
+	data["strength"] = strength
+	data["acidity"] = acidity
+	data["tags"] = tags
+	return data

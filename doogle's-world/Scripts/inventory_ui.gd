@@ -16,6 +16,7 @@ func _on_inventory_update():
 	for item in Global.inventory:
 		var slot = Global.inventory_slot_scene.instantiate()
 		grid_container.add_child(slot)
+		slot.set_inventory_slot(Global.inventory.find(item))
 		if item != null:
 			slot.set_item(item)
 		else:
