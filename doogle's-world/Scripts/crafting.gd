@@ -3,14 +3,14 @@ extends CSGMesh3D
 @onready var interactable: Area3D = $Interactable
 
 # Initialize the callback function to run when the object gets interacted with.
-func _ready():
+func _ready() -> void:
 	interactable.interact = _on_interact
 	
 	var interactKeybind: InputEventKey = InputMap.action_get_events("interact")[0]
 	interactable.interact_name = "[" + interactKeybind.as_text_physical_keycode() + "] to craft"
 	
 # This functions runs when the player interacts with the object
-func _on_interact():
+func _on_interact() -> void:
 	if interactable.is_interactable:
 		if Global.hotbar_inventory[0] != null and Global.hotbar_inventory[1] != null:
 			#TransmutationSystem.combine()
@@ -25,6 +25,6 @@ func _on_interact():
 			item_b.init_current_properties()
 			
 			var crafted:Stats = TransmutationSystem.combine(item_a,item_b,{})
-			var crafted_dict = crafted.get_data_as_dict()
+			var crafted_dict:Dictionary = crafted.get_data_as_dict()
 			print(crafted_dict)
 		

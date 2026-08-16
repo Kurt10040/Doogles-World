@@ -8,9 +8,15 @@ var scene_path: String = "res://Scenes/inventory_item.tscn"
 @onready var object_mesh:MeshInstance3D = $Mesh
 @onready var interactable = $Interactable
 
+func _init() -> void:
+	RenderingServer.set_debug_generate_wireframes(true)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if stats.name == "Meshy":
+		stats.mesh = MeshGenerator.newMesh()
+		#get_viewport().debug_draw = Viewport.DEBUG_DRAW_WIREFRAME
+	
 	# Change the mesh of the item to the specified mesh in game
 	if not Engine.is_editor_hint() and stats:
 		var interactKeybind: InputEventKey = InputMap.action_get_events("interact")[0]
@@ -56,32 +62,21 @@ func on_interact():
 		}
 		
 		# Add the item to player inventory
-		print("The player picked up ", item["name"])
 		if Global.player_node:
 			Global.add_item(item)
-			self.queue_free()
+			self.get_parent().queue_free()
 
 # Set item data from external source
 func set_item_data(data):
 	stats = Stats.new()
-	stats.name =        data["name"]
-	stats.type =        data["type"]
-	stats.item_class =  data["class"]
-	stats.rarity =      data["rarity"]
-	stats.mass =        data["mass"]
-	stats.is_shiny =    data["shiny"]
-	stats.efficacy =    data["efficacy"]
-	stats.enchantment = data["enchantment"]
-	stats.icon =        data["icon"]
-	stats.mesh =        data["mesh"]
-	scene_path =        data["scene_path"]
 	
-	stats.base_heat =         data["base_heat"]
-	stats.base_stability =    data["base_stability"]
-	stats.base_volatility =   data["base_volatility"]
-	stats.base_density =      data["base_density"]
-	stats.base_conductivity = data["base_conductivity"]
-	stats.base_purity =       data["base_purity"]
-	stats.base_strength =     data["base_strength"]
-	stats.base_acidity =      data["base_acidity"]
-	stats.base_tags =         data["base_tags"]
+	for key in data:
+		if key in stats:
+			stats.set(key, data[key])
+		else:
+			if key == "class":
+				stats.set("item_class", data[key])
+			elif key == "shiny":
+				stats.set("is_shiny", data[key])
+			elif key not in ["quantity","scene_path"]:
+				print("Unknown stat: ", key, " on item ", data["name"])

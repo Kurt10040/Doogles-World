@@ -74,6 +74,11 @@ base_acidity = 8
 base_tags = Array[String](["Life", "Magical"])
 metadata/_custom_type_script = "uid://b8c7dh81pseph"
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_6bp64"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_6bp64"]
+points = PackedVector3Array(0.75, -0.565, -0.45, -0.725, -0.565, -0.45, 0.75, 0.575, -0.45, -0.75, -0.565, 0.45, 0.75, 0.575, 0.45, 0.75, -0.565, 0.45)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_344ge"]
 albedo_color = Color(0.37075227, 0.22623575, 0.09692631, 1)
 metallic = 0.46
@@ -101,6 +106,10 @@ base_strength = 50
 base_acidity = 2
 base_tags = Array[String](["Herb", "Dead"])
 metadata/_custom_type_script = "uid://b8c7dh81pseph"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6bp64"]
+radius = 0.33740234
+height = 1.0324707
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_6bp64"]
 radius = 0.7
@@ -145,6 +154,15 @@ size = Vector3(0.43066406, 0.42993164, 0.43530273)
 [sub_resource type="Resource" id="Resource_6iyac"]
 script = ExtResource("7_344ge")
 item_class = 1
+metadata/_custom_type_script = "uid://b8c7dh81pseph"
+
+[sub_resource type="Resource" id="Resource_344ge"]
+script = ExtResource("7_344ge")
+name = "Meshy"
+type = 2
+item_class = 1
+mass = 0.3
+efficacy = 3
 metadata/_custom_type_script = "uid://b8c7dh81pseph"
 
 [node name="Main" type="Node3D" unique_id=1439304250]
@@ -277,16 +295,40 @@ size = Vector3(3.3242188, 2.5563965, 4.352539)
 
 [node name="Items" type="Node3D" parent="." unique_id=1759445789]
 
-[node name="Inventory_item2" parent="Items" unique_id=256383570 instance=ExtResource("7_6bp64")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.82284, 1.31, 2.7294104)
+[node name="RigidBody3D" type="RigidBody3D" parent="Items" unique_id=1632128926]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0429044, 1.2863548, 1.0213058)
+collision_layer = 4
+collision_mask = 7
+
+[node name="Inventory_item2" parent="Items/RigidBody3D" unique_id=256383570 instance=ExtResource("7_6bp64")]
 stats = SubResource("Resource_d1ilt")
 
-[node name="Inventory_item5" parent="Items" unique_id=1758998016 instance=ExtResource("7_6bp64")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1671376, 1.3100004, 5.935089)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Items/RigidBody3D" unique_id=654722155]
+transform = Transform3D(0.53, 0, 0, 0, 0.53, 0, 0, 0, 0.53, 0, 0, 0)
+shape = SubResource("SphereShape3D_6bp64")
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="Items" unique_id=793120440]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7104791, 1.672681, 5.122931)
+collision_layer = 4
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Items/RigidBody3D2" unique_id=955143923]
+shape = SubResource("ConvexPolygonShape3D_6bp64")
+debug_color = Color(0, 0.5950001, 0.7, 1)
+
+[node name="Inventory_item5" parent="Items/RigidBody3D2" unique_id=1758998016 instance=ExtResource("7_6bp64")]
 stats = SubResource("Resource_6bp64")
 
-[node name="Inventory_item3" parent="Items" unique_id=1833178467 instance=ExtResource("7_6bp64")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.492503, 1.3100004, 6.3723288)
+[node name="RigidBody3D3" type="RigidBody3D" parent="Items" unique_id=2048870508]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.681793, 1.7947129, 6.413499)
+collision_layer = 4
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Items/RigidBody3D3" unique_id=556643540]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0008544922, 0)
+shape = SubResource("CapsuleShape3D_6bp64")
+
+[node name="Inventory_item3" parent="Items/RigidBody3D3" unique_id=1833178467 instance=ExtResource("7_6bp64")]
 stats = SubResource("Resource_hptm8")
 
 [node name="ItemSpawnArea" type="Area3D" parent="." unique_id=463069717]
@@ -322,3 +364,7 @@ shape = SubResource("BoxShape3D_fdnlq")
 
 [node name="Inventory_item" parent="RigidBody3D2" unique_id=1696481451 instance=ExtResource("7_6bp64")]
 stats = SubResource("Resource_6iyac")
+
+[node name="Inventory_item" parent="." unique_id=52105520 instance=ExtResource("7_6bp64")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9247518, 2.913303, -0.7090509)
+stats = SubResource("Resource_344ge")

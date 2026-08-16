@@ -85,12 +85,10 @@ var spawnables = [
 ]
 
 
-func _ready():
+func _ready()->void:
 	# Initialize inventory size
-	inventory.resize(3)
-	hotbar_inventory.resize(5)
-	#TransmutationSystem.combine(Stats.new(),Stats.new(),{})
-	
+	inventory.resize(0)
+	hotbar_inventory.resize(1)
 
 # Add a new item to the inventory
 func add_item(item, to_hotbar = true):
@@ -127,7 +125,10 @@ func add_item(item, to_hotbar = true):
 		increase_inventory_size(item)
 		return true
 	
-func remove_item(item_index, is_from_hotbar:bool):
+func remove_item(item_index, is_from_hotbar):
+	if inventory.size() == 0:
+		print("Nothing in inventory")
+		
 	if is_from_hotbar: # Remove the item from the hotbar
 		if hotbar_inventory[item_index]:
 			hotbar_inventory[item_index]["quantity"] -= 1
@@ -136,17 +137,25 @@ func remove_item(item_index, is_from_hotbar:bool):
 			if hotbar_inventory[item_index]["quantity"] <= 0:
 				print("drop item "+str(item_index)+" from hotbar")
 				hotbar_inventory[item_index] = null
+				inventory_updated.emit()
 				return true
 			
 			inventory_updated.emit()
 			return false
 	else: # Remove item from the main inventory
+		print("Array Size: ", inventory.size(), " | Trying to access index: ", item_index)
+		var ii = []
+		for iw in inventory:
+			ii.append(iw["name"])
+		print("Inventory: "+str(ii))
+		
 		if inventory[item_index]:
 			inventory[item_index]["quantity"] -= 1
 			
 			if inventory[item_index]["quantity"] <= 0:
 				print("drop item "+str(item_index)+" from inventory")
 				inventory.remove_at(item_index)
+				inventory_updated.emit()
 				return true
 			inventory_updated.emit()
 			return false
@@ -157,9 +166,10 @@ func increase_inventory_size(item):
 	inventory[-1] = item
 	inventory_updated.emit()
 
+# Drop an item from the player inventory
 func drop_item(item_data):
 	# Load and instance a new item node
-	var item_scene = load(item_data["scene_path"])
+	var item_scene := load(item_data["scene_path"])
 	var item_instance: Node3D = item_scene.instantiate()
 	
 	# Set item instance data 
@@ -195,6 +205,7 @@ func drop_item(item_data):
 	# Place the spawned item at the player
 	rigid_body.global_position = player_node.position + Vector3(0,4,0)
 
+# Add an item into the player's hotbar
 func add_hotbar_item(item):
 	for i in range(hotbar_inventory.size()):
 		# check if the item already exists in the hotbar and has the same properties
@@ -216,6 +227,19 @@ func add_hotbar_item(item):
 	# If the hotbar is full
 	return false
 
+# Swap inventory items
+func swap_inventory_items(index1, index2, source_container:String, target_container:String):
+	if index1 < 0 or index1 > inventory.size() or index2 < 0 or index2 > inventory.size():
+		push_warning("target index out of bounds")
+		return false
+	
+	var temp = inventory[index1]
+	inventory[index1] = inventory[index2]
+	inventory[index2] = temp
+	inventory_updated.emit()
+	return true
+
+
 # Set a global reference to the player scene/object
-func set_player_ref(plr):
+func set_player_ref(plr) -> void:
 	player_node = plr

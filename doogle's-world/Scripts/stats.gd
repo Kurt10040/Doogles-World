@@ -72,7 +72,7 @@ var strength: int
 var acidity: int
 var tags: Array[String] = []
 
-func set_identity(data:Dictionary):
+func set_identity(data:Dictionary) -> void:
 	name =        data["name"]
 	type =        data["type"]
 	item_class =  data["class"]
@@ -86,58 +86,58 @@ func set_identity(data:Dictionary):
 	mesh =        data["mesh"]
 	icon =        data["icon"]
 
-func set_base_properties(data:Dictionary):
-	base_heat = data["base_heat"]
-	base_stability = data["base_stability"]
-	base_volatility = data["base_volatility"]
-	base_density = data["base_density"]
+func set_base_properties(data:Dictionary) -> void:
+	base_heat         = data["base_heat"]
+	base_stability    = data["base_stability"]
+	base_volatility   = data["base_volatility"]
+	base_density      = data["base_density"]
 	base_conductivity = data["base_conductivity"]
-	base_purity = data["base_purity"]
-	base_strength = data["base_strength"]
-	base_acidity = data["base_acidity"]
-	base_tags = data["base_tags"]
+	base_purity       = data["base_purity"]
+	base_strength     = data["base_strength"]
+	base_acidity      = data["base_acidity"]
+	base_tags         = data["base_tags"]
 
-func init_current_properties():
-	heat = base_heat
-	stability = base_stability
-	volatility = base_volatility
-	density = base_density
+func init_current_properties() -> void:
+	heat         = base_heat
+	stability    = base_stability
+	volatility   = base_volatility
+	density      = base_density
 	conductivity = base_conductivity
-	purity = base_purity
-	strength = base_strength
-	acidity = base_acidity
-	tags = base_tags
+	purity       = base_purity
+	strength     = base_strength
+	acidity      = base_acidity
+	tags         = base_tags
 
-func get_data_as_dict():
-	var data = {}
-	data["name"] = name
-	data["type"] = type
-	data["class"] = item_class
-	data["rarity"] = rarity
-	data["mass"] = mass
-	data["shiny"] = is_shiny
-	data["efficacy"] = efficacy
+func get_data_as_dict() -> Dictionary:
+	var data:Dictionary = {}
+	data["name"]        = name
+	data["type"]        = type
+	data["class"]       = item_class
+	data["rarity"]      = rarity
+	data["mass"]        = mass
+	data["shiny"]       = is_shiny
+	data["efficacy"]    = efficacy
 	data["enchantment"] = enchantment
-	data["icon"] = icon
-	data["mesh"] = mesh
+	data["icon"]        = icon
+	data["mesh"]        = mesh
 	
-	data["base_heat:"] = base_heat
-	data["base_stability"] = base_stability
-	data["base_volatility"] = base_volatility
-	data["base_density"] = base_density
+	data["base_heat"]         = base_heat
+	data["base_stability"]    = base_stability
+	data["base_volatility"]   = base_volatility
+	data["base_density"]      = base_density
 	data["base_conductivity"] = base_conductivity
-	data["base_purity"] = base_purity
-	data["base_strength"] = base_strength
-	data["base_acidity"] = base_acidity
-	data["base_tags"] = base_tags
+	data["base_purity"]       = base_purity
+	data["base_strength"]     = base_strength
+	data["base_acidity"]      = base_acidity
+	data["base_tags"]         = base_tags
 	
-	data["heat:"] = heat
-	data["stability"] = stability
-	data["volatility"] = volatility
-	data["density"] = density
+	data["heat"]         = heat
+	data["stability"]    = stability
+	data["volatility"]   = volatility
+	data["density"]      = density
 	data["conductivity"] = conductivity
-	data["purity"] = purity
-	data["strength"] = strength
-	data["acidity"] = acidity
-	data["tags"] = tags
+	data["purity"]       = purity
+	data["strength"]     = strength
+	data["acidity"]      = acidity
+	data["tags"]         = tags
 	return data

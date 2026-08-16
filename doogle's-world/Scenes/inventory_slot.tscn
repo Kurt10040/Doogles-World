@@ -1,8 +1,21 @@
 [gd_scene format=3 uid="uid://be6nsaon8mqkr"]
 
 [ext_resource type="Script" uid="uid://thi6fy4duwxw" path="res://Scripts/inventory_slot.gd" id="1_0v82l"]
+[ext_resource type="Texture2D" uid="uid://dxlyrowutwh17" path="res://Assets/Textures/diamond_pickaxe.png" id="2_0cu6i"]
+[ext_resource type="FontFile" uid="uid://cdvdoq5qhte7d" path="res://Assets/nk57-monospace-cd-rg.ttf" id="3_pnayc"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0v82l"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pnayc"]
+bg_color = Color(0, 0, 0, 0.2784314)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="LabelSettings" id="LabelSettings_6h8ck"]
+font = ExtResource("3_pnayc")
+font_size = 29
+font_color = Color(0, 0, 0, 1)
+outline_size = 3
 
 [node name="InventorySlot" type="Control" unique_id=185177490]
 custom_minimum_size = Vector2(100, 100)
@@ -18,31 +31,28 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0v82l")
 
-[node name="OuterBorder" type="ColorRect" parent="." unique_id=626510888]
+[node name="outer_border" type="Panel" parent="." unique_id=689913115]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.36838108, 0.46689522, 0.76902395, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_pnayc")
 
-[node name="InnerBorder" type="ColorRect" parent="." unique_id=1224413676]
+[node name="TextureRect" type="TextureRect" parent="outer_border" unique_id=58350517]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -45.0
-offset_top = -45.0
-offset_right = 45.0
-offset_bottom = 45.0
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.4302841, 0.19110039, 0.44204527, 1)
+texture = ExtResource("2_0cu6i")
+expand_mode = 3
 
-[node name="ItemIcon" type="SubViewportContainer" parent="InnerBorder" unique_id=739656976]
+[node name="ItemIcon" type="SubViewportContainer" parent="outer_border" unique_id=739656976]
 visible = false
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
@@ -58,26 +68,32 @@ offset_bottom = 65.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ItemView" type="SubViewport" parent="InnerBorder/ItemIcon" unique_id=1162189280]
+[node name="ItemView" type="SubViewport" parent="outer_border/ItemIcon" unique_id=1162189280]
 handle_input_locally = false
 size = Vector2i(130, 130)
 size_2d_override_stretch = true
 render_target_update_mode = 0
 
-[node name="ItemQuantity" type="Label" parent="InnerBorder" unique_id=121525592]
+[node name="ItemQuantity" type="Label" parent="outer_border" unique_id=121525592]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -26.0
-offset_top = -40.0
+offset_left = -31.0
+offset_top = -45.0
+offset_right = -5.0
+offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 29
 text = "1"
+label_settings = SubResource("LabelSettings_6h8ck")
+horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="ItemButton" type="Button" parent="." unique_id=422608782]
 layout_mode = 1
@@ -86,7 +102,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_0v82l")
+flat = true
 
 [node name="DetailsPanel" type="ColorRect" parent="." unique_id=729916486]
 visible = false
@@ -102,7 +118,6 @@ offset_top = 10.0
 offset_right = 135.0
 offset_bottom = 35.0
 theme_override_font_sizes/font_size = 20
-text = "Iron"
 vertical_alignment = 1
 
 [node name="ItemType" type="Label" parent="DetailsPanel" unique_id=405174774]
@@ -116,7 +131,6 @@ offset_right = 55.0
 offset_bottom = 6.0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 11
-text = "Metal"
 vertical_alignment = 1
 
 [node name="ItemClass" type="Label" parent="DetailsPanel" unique_id=2070771473]
@@ -130,7 +144,6 @@ offset_right = -10.0
 offset_bottom = 33.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 11
-text = "Ore"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -144,7 +157,6 @@ offset_top = -23.0
 offset_right = 101.0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 11
-text = "Uncommon"
 vertical_alignment = 2
 
 [node name="ItemMass" type="Label" parent="DetailsPanel" unique_id=985720638]
@@ -160,10 +172,9 @@ offset_right = -10.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 11
-text = "0.700kg"
 horizontal_alignment = 2
 vertical_alignment = 2
 
+[connection signal="gui_input" from="ItemButton" to="." method="_on_item_button_gui_input"]
 [connection signal="mouse_entered" from="ItemButton" to="." method="_on_item_button_mouse_entered"]
 [connection signal="mouse_exited" from="ItemButton" to="." method="_on_item_button_mouse_exited"]
-[connection signal="pressed" from="ItemButton" to="." method="_on_item_button_pressed"]

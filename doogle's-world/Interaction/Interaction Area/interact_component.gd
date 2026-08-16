@@ -29,9 +29,9 @@ func _process(_delta: float) -> void:
 		hide_prompt()
 
 # Sort the interactions list by closest to the player
-func _sort_nearest(area1, area2):
-	var area1_dist = global_position.distance_to(area1.global_position)
-	var area2_dist = global_position.distance_to(area2.global_position)
+func _sort_nearest(area1:Variant, area2:Variant)->Variant:
+	var area1_dist:float = global_position.distance_to(area1.global_position)
+	var area2_dist:float = global_position.distance_to(area2.global_position)
 	return area1_dist < area2_dist
 
 # Add the interaction object into list
@@ -42,9 +42,9 @@ func _on_interact_range_area_entered(area: Area3D) -> void:
 func _on_interact_range_area_exited(area: Area3D) -> void:
 	current_interactions.erase(area)
 
-func show_prompt(text: String):
+func show_prompt(text: String)->void:
 	interact_prompt_change.emit(text)
 
-func hide_prompt():
+func hide_prompt()->void:
 	interact_prompt_change.emit("")
 	

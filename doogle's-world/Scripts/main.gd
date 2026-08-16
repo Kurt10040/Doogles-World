@@ -30,7 +30,7 @@ func spawn_random_items(spawnable_items:Array,count:int):
 	var attempts = 0
 	
 	while spawned_count < count and attempts < 100:
-		var area = $ItemSpawnArea/CollisionShape3D
+		var area = $ItemSpawnArea/CollisionShape3D2
 		var rand_pos = get_random_position(area)
 		spawn_item(spawnable_items[randi() % spawnable_items.size()], rand_pos)
 		spawned_count += 1
