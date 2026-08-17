@@ -7,6 +7,7 @@ extends Control
 
 var dragged_slot = null
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.inventory_updated.connect(_update_hotbar_ui)
@@ -45,8 +46,10 @@ func _on_drag_end():
 	
 	# Drop the slot only if the target is a valid target
 	if target["slot"] != null and dragged_slot != target["slot"]:
-		print(target)
-		drop_slot(dragged_slot, target["slot"])
+		if target["container"] == "hotbar":
+			drop_slot(dragged_slot, target["slot"], "hotbar", "hotbar")
+		else:
+			drop_slot(dragged_slot,target["slot"], "hotbar", "inventory")
 	dragged_slot = null # clear the variable
 
 # Get the slot that the mouse is hovering over
@@ -67,20 +70,26 @@ func get_slot_under_mouse()->Dictionary:
 	
 	return {"slot":null, "container":""}
 
-func get_slot_index(slot:Control)->int:
-	for i in range(hotbar_container.get_child_count()):
-		if hotbar_container.get_child(i) == slot:
-			return i
+func get_slot_index(slot:Control, slot_source)->int:
+	if slot_source == "hotbar":
+		for i in range(hotbar_container.get_child_count()):
+			if hotbar_container.get_child(i) == slot:
+				return i
+	elif slot_source == "inventory":
+		for i in range(inventory_container.get_child_count()):
+			if inventory_container.get_child(i) == slot:
+				return i
+		
 	
 	return -1
 
-func drop_slot(slot1:Control, slot2:Control):
-	var slot1_index = get_slot_index(slot1)
-	var slot2_index = get_slot_index(slot2)
+func drop_slot(slot1:Control, slot2:Control, slot1_src:String, slot2_src:String):
+	var slot1_index = get_slot_index(slot1, slot1_src)
+	var slot2_index = get_slot_index(slot2, slot2_src)
 	if slot1_index == -1 or slot2_index == -1:
 		print("invalid slot found")
 		return
 	else:
-		if Global.swap_inventory_items(slot1_index,slot2_index,"hotbar","hotbar"):
+		if Global.swap_inventory_items(slot1_index,slot2_index,slot1_src,slot2_src):
 			print("Dropping slot items: ",slot1,slot2_index)
 			_update_hotbar_ui()

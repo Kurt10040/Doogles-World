@@ -15,7 +15,6 @@ enum ItemRarity {
 enum ItemClass {
 	ORGANIC,
 	ORE,
-	RAW_MATERIAL,
 	CRYSTAL,
 	LIFE_FORCE,
 	TOOL,
@@ -33,6 +32,10 @@ enum ItemType {
 	LIQUID,
 	MAGIC,
 	CREATURE_DROPS
+}
+enum MaterialProperties {
+	SHINY,
+	
 }
 
 # Initialize editable stats about the item. These can be customised in the inspector or through a script.

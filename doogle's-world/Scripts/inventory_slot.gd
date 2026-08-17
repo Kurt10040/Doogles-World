@@ -22,11 +22,9 @@ var inventory_slot_index:int = -1
 
 # set hotbar index
 func set_hotbar_slot(new_index:int)->void:
-	print("Set new hotbar slot from "+str(hotbar_slot)+" to "+str(new_index))
 	hotbar_slot = new_index
 
 func set_inventory_slot(new_index:int)->void:
-	print("Set new inventory slot from "+str(inventory_slot_index)+" to "+str(new_index))
 	inventory_slot_index = new_index
 
 func get_inventory_slot_index()->int:

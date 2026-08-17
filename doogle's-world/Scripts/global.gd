@@ -135,25 +135,17 @@ func remove_item(item_index, is_from_hotbar):
 			
 			# Delete the item slot if the quantity reaches 0
 			if hotbar_inventory[item_index]["quantity"] <= 0:
-				print("drop item "+str(item_index)+" from hotbar")
 				hotbar_inventory[item_index] = null
 				inventory_updated.emit()
 				return true
 			
 			inventory_updated.emit()
 			return false
-	else: # Remove item from the main inventory
-		print("Array Size: ", inventory.size(), " | Trying to access index: ", item_index)
-		var ii = []
-		for iw in inventory:
-			ii.append(iw["name"])
-		print("Inventory: "+str(ii))
-		
+	else: # Remove item from the main inventory	
 		if inventory[item_index]:
 			inventory[item_index]["quantity"] -= 1
 			
 			if inventory[item_index]["quantity"] <= 0:
-				print("drop item "+str(item_index)+" from inventory")
 				inventory.remove_at(item_index)
 				inventory_updated.emit()
 				return true
@@ -233,11 +225,38 @@ func swap_inventory_items(index1, index2, source_container:String, target_contai
 		push_warning("target index out of bounds")
 		return false
 	
-	var temp = inventory[index1]
-	inventory[index1] = inventory[index2]
-	inventory[index2] = temp
-	inventory_updated.emit()
-	return true
+	# Check if the player moved a slot from the inventory to the hotbar (and vice verse) or not
+	if source_container != target_container:
+		print("Moved slot "+str(index1)+" of "+source_container+" to slot "+str(index2)+" of "+target_container)
+		if source_container == "inventory":
+			var temp = inventory[index1]
+			inventory[index1] = hotbar_inventory[index2]
+			hotbar_inventory[index2] = temp
+			inventory_updated.emit()
+			return true
+		else:
+			var temp = hotbar_inventory[index1]
+			hotbar_inventory[index1] = inventory[index2]
+			inventory[index2] = temp
+			inventory_updated.emit()
+			return true
+			
+	else:
+		# Swap items within inventory
+		if source_container == "inventory":
+			var temp = inventory[index1]
+			inventory[index1] = inventory[index2]
+			inventory[index2] = temp
+			inventory_updated.emit()
+			return true
+		else:
+		# Swap items within hotbar
+			var temp = hotbar_inventory[index1]
+			hotbar_inventory[index1] = hotbar_inventory[index2]
+			hotbar_inventory[index2] = temp
+			inventory_updated.emit()
+			return true
+			
 
 
 # Set a global reference to the player scene/object

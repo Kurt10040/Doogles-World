@@ -13,9 +13,13 @@ func _init() -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if stats.name == "Meshy":
-		stats.mesh = MeshGenerator.newMesh()
+	if stats.mesh == null:
 		#get_viewport().debug_draw = Viewport.DEBUG_DRAW_WIREFRAME
+		stats.mesh = MeshGenerator.newMesh(stats)
+		var collision_shape = self.get_parent_node_3d().find_child("CollisionShape3D")
+		var convex:ConvexPolygonShape3D = stats.mesh.create_convex_shape()
+		collision_shape.shape = convex
+		collision_shape.transform = self.object_mesh.transform
 	
 	# Change the mesh of the item to the specified mesh in game
 	if not Engine.is_editor_hint() and stats:

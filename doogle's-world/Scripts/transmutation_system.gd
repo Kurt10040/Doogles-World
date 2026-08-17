@@ -21,6 +21,10 @@ static func combine(item_a:Stats, item_b:Stats, environment: Dictionary) -> Stat
 	result_item = determine_rarity(result_item)
 	# Determine name
 	
+	# Generate appearance
+	var appearance = AppearanceGenerator.generate_appearance(result_item)
+	var result_mesh = MeshGenerator.newMesh(result_item)
+	
 	# Return final transmutated item
 	return result_item
 
@@ -115,3 +119,6 @@ static func determine_tags(result:Stats,item_a:Stats,item_b:Stats) -> Stats:
 	
 static func determine_rarity(result:Stats) -> Stats:
 	return result
+
+static func determine_appearance(result:Stats):
+	pass
