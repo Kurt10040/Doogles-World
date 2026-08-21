@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cli6uqai3pf5o"
+path="res://.godot/imported/PUSHILIN_Beanstalk.obj-92d77f2419fadaa7a4a5bdc2ae873790.mesh"
+
+[deps]
+
+files=["res://.godot/imported/PUSHILIN_Beanstalk.obj-92d77f2419fadaa7a4a5bdc2ae873790.mesh"]
+
+source_file="res://Assets/Models/Beanstalk by Poly by Google - 5rHLdbIH1r9/PUSHILIN_Beanstalk.obj"
+dest_files=["res://.godot/imported/PUSHILIN_Beanstalk.obj-92d77f2419fadaa7a4a5bdc2ae873790.mesh", "res://.godot/imported/PUSHILIN_Beanstalk.obj-92d77f2419fadaa7a4a5bdc2ae873790.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

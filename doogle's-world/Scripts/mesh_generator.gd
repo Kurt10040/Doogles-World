@@ -2,23 +2,33 @@
 extends RefCounted
 class_name MeshGenerator
 
-static func newMesh(item_stats:Stats)->ArrayMesh:
-	var subdivisions:int = 6
+static func generate_item_mesh(item_stats:Stats)->ArrayMesh:
 	var size:float = 2.0
-	var shape:Appearance.ShapeArchetypes = Appearance.ShapeArchetypes.ROCK
 	
 	var appearance:Appearance = AppearanceGenerator.generate_appearance(item_stats)
+	#appearance.scale = Vector3(1.6,1.2,1)
+	appearance.scale = Vector3(2,2,2)
+	appearance.noise_seed = randi_range(1,100)
 	
 	var surface_array:Array
-	if shape == Appearance.ShapeArchetypes.ROCK:
-		surface_array = generate_rock(subdivisions, size/2.0, 0.25, 1, 3)
+	if appearance.shape == Appearance.ShapeArchetypes.ROCK:
+		surface_array = generate_rock(appearance, size/2.0)
+	elif appearance.shape == Appearance.ShapeArchetypes.CRYSTAL:
+		surface_array = generate_crystal(appearance, size/2.0)
+	elif appearance.shape == Appearance.ShapeArchetypes.BLOB:
+		surface_array = generate_blob(appearance, size/2.0)
 
-	var array_mesh := ArrayMesh.new()
-	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
+	#var array_mesh := ArrayMesh.new()
+	#array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
+	var array_mesh := array_to_arraymesh(surface_array)
 
 	return array_mesh
 
+static func array_to_arraymesh(array:Array)->ArrayMesh:
+	var array_mesh := ArrayMesh.new()
+	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, array)
 
+	return array_mesh
 
 # == BASE GEOMETRY SHAPES ==
 static func create_plane(subdiv:int, index:int, direction:Vector3, center:Vector3)->Array:
@@ -102,40 +112,40 @@ static func create_sphere(subdiv:int, radius:float)->Array:
 
 
 # == SHAPE GENERATORS ==
-static func generate_rock(subdiv:int, radius:float, roughness:float, noise_scale:float, noise_seed:int)->Array:
+static func generate_rock(appearance:Appearance, radius:float)->Array:
 	# initialize a base sphere
-	var surface_array:Array = create_sphere(subdiv, radius)
+	var surface_array:Array = create_sphere(appearance.subdivisions, radius)
 	
 	# Create a noise profile with the given parameters
 	var noise := FastNoiseLite.new()
-	noise.seed = noise_seed
-	noise.frequency = noise_scale
+	noise.seed = appearance.noise_seed
+	noise.frequency = appearance.noise_scale
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
 	
 	# Loop through each vertex in the sphere
 	for i in surface_array[Mesh.ARRAY_VERTEX].size():
 		var vertex:Vector3 = surface_array[Mesh.ARRAY_VERTEX][i] # Grab the vertex coordinates
-		vertex *= Vector3(1.6,1.2,1) # Stretch
+		vertex *= appearance.scale # Stretch
 		var vertex_dir:Vector3 = vertex.normalized()
 		# Apply noise displacement
 		var noise_value = noise.get_noise_3d(vertex_dir.x, vertex_dir.y, vertex_dir.z)
-		var displacement = noise_value * roughness * radius
+		var displacement = noise_value * appearance.roughness * radius
 		
 		surface_array[Mesh.ARRAY_VERTEX][i] = vertex_dir * (vertex.length() + displacement)
 	
 	return surface_array
 
-static func generate_crystal(subdiv:int, size:float)->Array:
+static func generate_crystal(appearance:Appearance, size:float)->Array:
 	# initialize a base shape
-	var surface_array:Array = create_cube(subdiv)
+	var surface_array:Array = create_cube(appearance.subdivisions)
 	
 	
 	
 	return surface_array
 
-static func generate_blob(subdiv:int, size:float)->Array:
+static func generate_blob(appearance:Appearance, size:float)->Array:
 	# initialize a base shape
-	var surface_array:Array = create_sphere(subdiv, size/2)
+	var surface_array:Array = create_sphere(appearance.subdivisions, size/2)
 	
 	
 	

@@ -2,6 +2,7 @@ extends Control
 
 
 @onready var hotbar_container = $HBoxContainer
+@onready var inventory_layer = $"../../InventoryUI"
 @onready var inventory_container:GridContainer = $"../../InventoryUI/InventoryFrame/inventory_UI/GridContainer"
 
 
@@ -50,6 +51,11 @@ func _on_drag_end():
 			drop_slot(dragged_slot, target["slot"], "hotbar", "hotbar")
 		else:
 			drop_slot(dragged_slot,target["slot"], "hotbar", "inventory")
+	elif target["slot"] == null and target["container"] == "inventory" and inventory_layer.visible:
+		Global.inventory.resize(Global.inventory.size()+1)
+		Global.inventory[-1] = dragged_slot.item
+		Global.hotbar_inventory[dragged_slot.hotbar_slot] = null
+		Global.inventory_updated.emit()
 	dragged_slot = null # clear the variable
 
 # Get the slot that the mouse is hovering over
@@ -67,6 +73,11 @@ func get_slot_under_mouse()->Dictionary:
 		
 		if slot_rect.has_point(mouse_pos):
 			return {"slot":slot, "container":"inventory"}
+	
+	var inventory_cont = $"../../InventoryUI/InventoryFrame/inventory_UI/GridContainer"
+	var inventory_rect = Rect2(inventory_cont.global_position, inventory_cont.size)
+	if inventory_rect.has_point(mouse_pos):
+		return {"slot":null, "container": "inventory"}
 	
 	return {"slot":null, "container":""}
 
@@ -91,5 +102,4 @@ func drop_slot(slot1:Control, slot2:Control, slot1_src:String, slot2_src:String)
 		return
 	else:
 		if Global.swap_inventory_items(slot1_index,slot2_index,slot1_src,slot2_src):
-			print("Dropping slot items: ",slot1,slot2_index)
 			_update_hotbar_ui()

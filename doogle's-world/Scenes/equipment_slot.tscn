@@ -1,0 +1,128 @@
+[gd_scene format=3 uid="uid://bpuk50ei16cwd"]
+
+[ext_resource type="Script" uid="uid://c64fb7cng1k4u" path="res://Scenes/equipment_slot.gd" id="1_qq6so"]
+[ext_resource type="Texture2D" uid="uid://dxlyrowutwh17" path="res://Assets/Textures/diamond_pickaxe.png" id="2_0mutm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pnayc"]
+bg_color = Color(0, 0, 0, 0.2784314)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[node name="EquipmentSlot" type="Control" unique_id=1906422520]
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 75.0
+offset_bottom = 75.0
+size_flags_horizontal = 4
+script = ExtResource("1_qq6so")
+
+[node name="outer_border" type="Panel" parent="." unique_id=315340921]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pnayc")
+
+[node name="TextureRect" type="TextureRect" parent="outer_border" unique_id=424717846]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_0mutm")
+
+[node name="ItemIcon" type="SubViewportContainer" parent="outer_border" unique_id=183435289]
+visible = false
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.0
+offset_top = -65.0
+offset_right = 65.0
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemView" type="SubViewport" parent="outer_border/ItemIcon" unique_id=2132690522]
+handle_input_locally = false
+size = Vector2i(130, 130)
+size_2d_override_stretch = true
+render_target_update_mode = 0
+
+[node name="ItemButton" type="Button" parent="." unique_id=1756044829]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="DetailsPanel" type="ColorRect" parent="." unique_id=158771645]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -85.0
+offset_right = 195.0
+offset_bottom = 10.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0, 1)
+color = Color(0.16924527, 0.1692453, 0.16924527, 1)
+
+[node name="ItemName" type="Label" parent="DetailsPanel" unique_id=1920536329]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 135.0
+offset_bottom = 35.0
+theme_override_font_sizes/font_size = 20
+vertical_alignment = 1
+
+[node name="ItemType" type="Label" parent="DetailsPanel" unique_id=646457347]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -11.5
+offset_right = 55.0
+offset_bottom = 6.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 11
+vertical_alignment = 1
+
+[node name="ItemClass" type="Label" parent="DetailsPanel" unique_id=246993678]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 33.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 11
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[connection signal="gui_input" from="ItemButton" to="." method="_on_item_button_gui_input"]
+[connection signal="mouse_entered" from="ItemButton" to="." method="_on_item_button_mouse_entered"]
+[connection signal="mouse_exited" from="ItemButton" to="." method="_on_item_button_mouse_exited"]

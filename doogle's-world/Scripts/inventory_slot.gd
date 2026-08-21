@@ -69,21 +69,10 @@ func _on_item_button_gui_input(event: InputEvent) -> void:
 					self.queue_free()
 		
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.is_pressed():
-				outer_border.modulate = Color(1,0,0)
-				drag_start.emit(self)
-			else:
-				outer_border.modulate = Color(1,1,1)
-				drag_end.emit()
-
-
-#func _get_drag_data(at_position: Vector2) -> Variant:
-	#var preview:ColorRect = outer_border.duplicate()
-	#var c:Control = Control.new()
-	#c.add_child(preview)
-	#preview.position -= Vector2(25,25)
-	#preview.self_modulate = Color.TRANSPARENT
-	#c.modulate = Color(c.modulate, 0.5)
-	#
-	#set_drag_preview(c)
-	#return item_icon
+			if item != null:
+				if event.is_pressed():
+					outer_border.modulate = Color(1,0,0)
+					drag_start.emit(self)
+				else:
+					outer_border.modulate = Color(1,1,1)
+					drag_end.emit()

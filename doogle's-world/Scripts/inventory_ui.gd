@@ -25,11 +25,11 @@ func _on_inventory_update():
 		slot.drag_end.connect(_on_drag_end)
 		
 		grid_container.add_child(slot)
-		slot.set_inventory_slot(Global.inventory.find(item))
 		if item != null:
+			slot.set_inventory_slot(Global.inventory.find(item))
 			slot.set_item(item)
 		else:
-			slot.set_empty()
+			slot.queue_free()
 
 # Clear the inventory
 func clear_inventory_grid():
@@ -91,5 +91,4 @@ func drop_slot(slot1:Control, slot2:Control, slot1_src:String, slot2_src:String)
 		return
 	else:
 		if Global.swap_inventory_items(slot1_index,slot2_index,slot1_src,slot2_src):
-			print("Dropping slot items: ",slot1,slot2_index)
 			_on_inventory_update()

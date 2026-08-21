@@ -1,13 +1,11 @@
-extends CSGMesh3D
+extends Node3D
 
 @onready var interactable: Area3D = $Interactable
 
 # Initialize the callback function to run when the object gets interacted with.
 func _ready() -> void:
 	interactable.interact = _on_interact
-	
-	var interactKeybind: InputEventKey = InputMap.action_get_events("interact")[0]
-	interactable.interact_name = "[" + interactKeybind.as_text_physical_keycode() + "] to craft"
+	interactable.interact_name = "Craft"
 	
 # This functions runs when the player interacts with the object
 func _on_interact() -> void:
@@ -15,12 +13,14 @@ func _on_interact() -> void:
 		if Global.hotbar_inventory[0] != null and Global.hotbar_inventory[1] != null:
 			#TransmutationSystem.combine()
 			print("The player wants to craft...")
-			#var item_a := Stats.new()
-			#item_a.set_base_properties(Global.hotbar_inventory[0])
-			#var item_b := Stats.new()
-			#item_b.set_base_properties(Global.hotbar_inventory[1])
-			var item_a:Stats = $"../../Items/Inventory_item3".stats
-			var item_b:Stats = $"../../Items/Inventory_item5".stats
+			var item_a := Stats.new()
+			item_a.set_identity(Global.hotbar_inventory[0])
+			item_a.set_base_properties(Global.hotbar_inventory[0])
+			var item_b := Stats.new()
+			item_b.set_identity(Global.hotbar_inventory[1])
+			item_b.set_base_properties(Global.hotbar_inventory[1])
+			#var item_a:Stats = $Interactable/RigidBody3D2/Inventory_item5.stats
+			#var item_b:Stats = $Interactable/RigidBody3D3/Inventory_item3.stats
 			item_a.init_current_properties()
 			item_b.init_current_properties()
 			

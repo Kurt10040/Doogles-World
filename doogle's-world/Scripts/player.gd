@@ -7,9 +7,12 @@ extends CharacterBody3D
 
 
 # Constants for player movement calculations
-const SPEED = 4.0
+var player_speed = 4.0
 const JUMP_VELOCITY = 4.5
 const navigation_speed = 1.0
+var player_direction:float = 0.0
+var camera_dir:float = 0.0
+var look_down:int = 0
 
 func _ready() -> void:
 	Global.set_player_ref(self)   # Set a global reference to the player scene object
@@ -30,17 +33,26 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")    # WASD movement
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		camera_dir = rotation.y*(180/PI) - 15*input_dir.x
+		velocity.x = direction.x * player_speed
+		velocity.z = direction.z * player_speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
-
-	#if not get_tree().paused:
+		velocity.x = move_toward(velocity.x, 0, player_speed)
+		velocity.z = move_toward(velocity.z, 0, player_speed)
+	
+	rotation.y = lerp_angle(rotation.y, player_direction*(PI/180), 0.1)
+	
+	
 	move_and_slide()
 
 	# Smooth Camera Tracking
 	$CameraController.position = lerp($CameraController.position, position,.08)
+	$CameraController.rotation.y = lerp_angle($CameraController.rotation.y, rotation.y, 0.08)
+	$CameraController.rotation.z = lerp_angle($CameraController.rotation.z, rotation.z - 3.5*input_dir.x*PI/180, 0.03)
+	$CameraController.rotation.x = lerp_angle($CameraController.rotation.x, rotation.x - 15*look_down*PI/180, 0.2)
+	
+	var sprint = int(Input.is_action_pressed("player_sprint"))
+	$CameraController/CameraTarget/OverheadCamera.fov = lerp($CameraController/CameraTarget/OverheadCamera.fov, 40.0 + (5.0*sprint), 0.1)
 
 # Listener for input events
 func _input(event):
@@ -52,3 +64,18 @@ func _input(event):
 	if event.is_action_pressed("menu"):
 		menu.visible = !menu.visible
 		get_tree().paused = !get_tree().paused
+		
+	if event.is_action_pressed("rotate_player_left"):
+		player_direction += 15
+		if player_direction >= 360:
+			player_direction = 0
+	
+	if event.is_action_pressed("rotate_player_right"):
+		player_direction -= 15
+		if player_direction <= -360:
+			player_direction = 0
+			
+	if event.is_action_pressed("player_sprint"):
+		player_speed = 8
+	elif event.is_action_released("player_sprint"):
+		player_speed = 4

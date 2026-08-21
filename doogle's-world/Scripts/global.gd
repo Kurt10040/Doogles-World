@@ -3,11 +3,15 @@ extends Node
 
 @onready var inventory_slot_scene = preload("res://Scenes/inventory_slot.tscn")
 
+var current_scene = null
+
 signal inventory_updated
 var player_node: Node = null
 var inventory = []
 var hotbar_inventory = []
+var equipment_inventory = []
 
+var hotbar_maxsize = 5
 
 var spawnables = [
 	{
@@ -86,9 +90,32 @@ var spawnables = [
 
 
 func _ready()->void:
+	var root = get_tree().root
+	current_scene = root.get_child(-1)
+	
 	# Initialize inventory size
 	inventory.resize(0)
-	hotbar_inventory.resize(1)
+	hotbar_inventory.resize(hotbar_maxsize)
+	equipment_inventory.resize(3)
+
+func goto_scene(path):
+	_deferred_goto_scene.call_deferred(path)
+
+func _deferred_goto_scene(path):
+	# It is now safe to remove the current scene.
+	current_scene.free()
+
+	# Load the new scene.
+	var s = ResourceLoader.load(path)
+
+	# Instance the new scene.
+	current_scene = s.instantiate()
+
+	# Add it to the active scene, as child of root.
+	get_tree().root.add_child(current_scene)
+
+	# Optionally, to make it compatible with the SceneTree.change_scene_to_file() API.
+	get_tree().current_scene = current_scene
 
 # Add a new item to the inventory
 func add_item(item, to_hotbar = true):
@@ -221,7 +248,16 @@ func add_hotbar_item(item):
 
 # Swap inventory items
 func swap_inventory_items(index1, index2, source_container:String, target_container:String):
-	if index1 < 0 or index1 > inventory.size() or index2 < 0 or index2 > inventory.size():
+	if "hotbar" in source_container:
+		source_container = "hotbar_inventory"
+	if "hotbar" in target_container:
+		target_container = "hotbar_inventory"
+		
+	if self.get(source_container) == null:
+		push_warning("no source slot")
+		return false
+	
+	if index1 < 0 or index1 > self.get(source_container).size() or index2 < 0 or index2 > self.get(target_container).size():
 		push_warning("target index out of bounds")
 		return false
 	

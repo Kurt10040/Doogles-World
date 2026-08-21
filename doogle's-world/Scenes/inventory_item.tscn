@@ -12,7 +12,7 @@ script = ExtResource("1_giout")
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="Interactable" parent="." unique_id=716970301 instance=ExtResource("2_gj4io")]
-interact_name = "[E] to pick up item"
+interact_name = "pick up item"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable" unique_id=1012640809]
+[node name="InteractRangeCol" type="CollisionShape3D" parent="Interactable" unique_id=1012640809]
 shape = SubResource("SphereShape3D_hehin")

@@ -11,5 +11,4 @@ func _ready() -> void:
 func _on_interact():
 	if interactable.is_interactable:
 		interactable.is_interactable = false
-		print("The player touched my balls")
-		self.queue_free()
+		Global.goto_scene("res://Scenes/homebase.tscn")

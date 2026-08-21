@@ -15,16 +15,18 @@ func _init() -> void:
 func _ready():
 	if stats.mesh == null:
 		#get_viewport().debug_draw = Viewport.DEBUG_DRAW_WIREFRAME
-		stats.mesh = MeshGenerator.newMesh(stats)
+		stats.mesh = MeshGenerator.generate_item_mesh(stats)
 		var collision_shape = self.get_parent_node_3d().find_child("CollisionShape3D")
 		var convex:ConvexPolygonShape3D = stats.mesh.create_convex_shape()
 		collision_shape.shape = convex
 		collision_shape.transform = self.object_mesh.transform
+		
+		var interact_hitbox:CollisionShape3D = self.find_child("InteractRangeCol")
+		interact_hitbox.scale =  Vector3(2,2,2)
 	
 	# Change the mesh of the item to the specified mesh in game
 	if not Engine.is_editor_hint() and stats:
-		var interactKeybind: InputEventKey = InputMap.action_get_events("interact")[0]
-		interactable.interact_name = "[" + interactKeybind.as_text_physical_keycode() + "] to pick up " + stats.name
+		interactable.interact_name = "pick up " + stats.name
 		interactable.interact = on_interact
 		object_mesh.mesh = stats.mesh
 

@@ -24,7 +24,8 @@ func _process(_delta: float) -> void:
 		current_interactions.sort_custom(_sort_nearest) # Use custom storting function to find nearest interactable object
 		if current_interactions[0].is_interactable:
 			# Show interaction label
-			show_prompt(current_interactions[0].interact_name)
+			var interactKeybind: InputEventKey = InputMap.action_get_events("interact")[0]
+			show_prompt("[" + interactKeybind.as_text_physical_keycode() + "] " + current_interactions[0].interact_name)
 	else:
 		hide_prompt()
 
