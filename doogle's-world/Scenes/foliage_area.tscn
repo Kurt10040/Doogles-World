@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bc28u6hjxkdff"]
+
+[ext_resource type="Script" uid="uid://cmhae7y5whql5" path="res://Scripts/foliage_area.gd" id="1_o8ufi"]
+
+[node name="FoliageArea" type="Node3D" unique_id=999116995]
+script = ExtResource("1_o8ufi")
+
+[node name="Foliage" type="MultiMeshInstance3D" parent="." unique_id=1978693881]

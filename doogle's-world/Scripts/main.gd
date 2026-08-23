@@ -5,7 +5,7 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	spawn_random_items(Global.spawnables,10)
+	spawn_random_items(Global.spawnables,10, $ItemSpawnArea/CollisionShape3D3)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float):
@@ -25,12 +25,12 @@ func get_random_position(area:CollisionShape3D):
 	
 	return area.global_transform * offset
 
-func spawn_random_items(spawnable_items:Array,count:int):
+func spawn_random_items(spawnable_items:Array,count:int, area:CollisionShape3D):
 	var spawned_count = 0
 	var attempts = 0
 	
 	while spawned_count < count and attempts < 100:
-		var area = $ItemSpawnArea/CollisionShape3D2
+		#var area = $ItemSpawnArea/CollisionShape3D2
 		var rand_pos = get_random_position(area)
 		spawn_item(spawnable_items[randi() % spawnable_items.size()], rand_pos)
 		spawned_count += 1

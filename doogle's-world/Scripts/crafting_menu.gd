@@ -4,7 +4,7 @@ extends Control
 @onready var grid_container: GridContainer = $GridContainer
 @onready var hotbar_container: HBoxContainer = $"../../../InventoryHotbar/InventoryHotbar/HBoxContainer"
 
-@export var grid_size:int = 9
+@export var grid_size:int = 4
 
 var dragged_slot = null
 
@@ -46,13 +46,14 @@ func _on_drag_start(slot_control:Control):
 # When the player drops the slot onto another slot
 func _on_drag_end():
 	var target = get_slot_under_mouse()
+	print(target)
 	
 	# Drop the slot only if the target is a valid target
 	if target["slot"] != null and dragged_slot != target["slot"]:
 		if target["container"] == "inventory":
-			drop_slot(dragged_slot, target["slot"], "inventory", "inventory")
+			drop_slot(dragged_slot, target["slot"], "crafting", "inventory")
 		else:
-			drop_slot(dragged_slot,target["slot"], "inventory", "hotbar")
+			drop_slot(dragged_slot,target["slot"], "crafting", "hotbar")
 	dragged_slot = null # clear the variable
 
 # Get the slot that the mouse is hovering over
@@ -63,7 +64,7 @@ func get_slot_under_mouse()->Dictionary:
 		var slot_rect = Rect2(slot.global_position, slot.size)
 		
 		if slot_rect.has_point(mouse_pos):
-			return {"slot":slot, "container":"inventory"}
+			return {"slot":slot, "container":"crafting"}
 	
 	for slot in hotbar_container.get_children():
 		var slot_rect = Rect2(slot.global_position, slot.size)

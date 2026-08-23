@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bpuk50ei16cwd"]
 
-[ext_resource type="Script" uid="uid://c64fb7cng1k4u" path="res://Scenes/equipment_slot.gd" id="1_qq6so"]
+[ext_resource type="Script" uid="uid://c64fb7cng1k4u" path="res://Scripts/equipment_slot.gd" id="1_qq6so"]
 [ext_resource type="Texture2D" uid="uid://dxlyrowutwh17" path="res://Assets/Textures/diamond_pickaxe.png" id="2_0mutm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pnayc"]

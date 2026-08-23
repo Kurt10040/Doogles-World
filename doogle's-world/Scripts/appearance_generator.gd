@@ -1,6 +1,19 @@
 extends RefCounted
 class_name AppearanceGenerator
 
+enum CreatureType {
+	LEAF,
+	WATER,
+	ROCK,
+	FIRE,
+	MAGIC
+}
+enum CreatureClass {
+	FRIENDLY,
+	CRITTER,
+	HOSTILE,
+	BEAST,
+}
 
 static func generate_appearance(stats:Stats)->Appearance:
 	# Determine appearance

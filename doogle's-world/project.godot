@@ -30,10 +30,6 @@ gdscript/warnings/unused_signal=0
 
 window/stretch/mode="canvas_items"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/asset_placer/plugin.cfg")
-
 [global_group]
 
 Items=""

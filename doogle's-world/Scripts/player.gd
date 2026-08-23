@@ -5,6 +5,7 @@ extends CharacterBody3D
 @onready var inventory_ui = $InventoryUI
 @onready var menu = $Menu
 
+@onready var crafting_ui = $CraftingMenu
 
 # Constants for player movement calculations
 var player_speed = 4.0
@@ -58,7 +59,8 @@ func _physics_process(delta: float) -> void:
 func _input(event):
 	# Toggle inventory
 	if event.is_action_pressed("inventory"):
-		inventory_ui.visible = !inventory_ui.visible
+		if !crafting_ui.visible:
+			inventory_ui.visible = !inventory_ui.visible
 	
 	# Toggle pause menu
 	if event.is_action_pressed("menu"):
@@ -76,6 +78,10 @@ func _input(event):
 			player_direction = 0
 			
 	if event.is_action_pressed("player_sprint"):
-		player_speed = 8
+		player_speed = 10
 	elif event.is_action_released("player_sprint"):
-		player_speed = 4
+		player_speed = 6
+
+
+func _on_close_button_pressed() -> void:
+	crafting_ui.visible = false

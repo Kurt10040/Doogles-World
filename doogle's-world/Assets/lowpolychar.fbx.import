@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://t7nfjqgkuxlg"
-path="res://.godot/imported/Rock_4.fbx-34064de128fbdc404e995e5666bae2a8.scn"
+uid="uid://b4evj8pm23xcg"
+path="res://.godot/imported/lowpolychar.fbx-735ec4594fac8b706476d6d5ba07056e.scn"
 
 [deps]
 
-source_file="res://Assets/Models/Rocks/Rock_4.fbx"
-dest_files=["res://.godot/imported/Rock_4.fbx-34064de128fbdc404e995e5666bae2a8.scn"]
+source_file="res://Assets/lowpolychar.fbx"
+dest_files=["res://.godot/imported/lowpolychar.fbx-735ec4594fac8b706476d6d5ba07056e.scn"]
 
 [params]
 
@@ -37,19 +37,7 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={
-"meshes": {
-"Rock_4": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 20.0,
-"save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://Assets/Models/Rocks/Rock_4.res",
-"save_to_file/path": "uid://c8rphlu6854st"
-}
-}
-}
+_subresources={}
 fbx/importer=0
 fbx/allow_geometry_helper_nodes=false
 fbx/embedded_image_handling=1
