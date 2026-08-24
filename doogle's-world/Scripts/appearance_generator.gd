@@ -15,16 +15,19 @@ enum CreatureClass {
 	BEAST,
 }
 
+# Generate an instance of the Appearance class with custom properties
 static func generate_appearance(stats:Stats)->Appearance:
-	# Determine appearance
+	# Determine base appearance
 	var subdivisions:int = 6
 	var size:float = 2.0
 	var shape:Appearance.ShapeArchetypes = Appearance.ShapeArchetypes.ROCK
 	
+	# create new Appearance class instance
 	var appearance:Appearance = Appearance.new()
 	
 	# Choose shape
 	if stats.item_class == stats.ItemClass.ORE and stats.type in [Stats.ItemType.METAL, Stats.ItemType.ROCK]:
+		#print("this a rock metal ore thingy")
 		appearance.shape = Appearance.ShapeArchetypes.ROCK
 	else:
 		print("yea idk what shape this is supposed to have lol so here is a rock")

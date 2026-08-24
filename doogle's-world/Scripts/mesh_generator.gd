@@ -9,14 +9,18 @@ static func generate_item_mesh(item_stats:Stats)->ArrayMesh:
 	#appearance.scale = Vector3(1.6,1.2,1)
 	appearance.scale = Vector3(2,2,2)
 	appearance.noise_seed = randi_range(1,100)
+	#appearance.shape = Appearance.ShapeArchetypes.BLOB
 	
 	var surface_array:Array
-	if appearance.shape == Appearance.ShapeArchetypes.ROCK:
-		surface_array = generate_rock(appearance, size/2.0)
-	elif appearance.shape == Appearance.ShapeArchetypes.CRYSTAL:
-		surface_array = generate_crystal(appearance, size/2.0)
-	elif appearance.shape == Appearance.ShapeArchetypes.BLOB:
-		surface_array = generate_blob(appearance, size/2.0)
+	if "Creature" in item_stats["tags"]:
+		print("generating creature mesh")
+		surface_array = generate_creature(appearance)
+	else:
+		print("generating item mesh")
+		surface_array = determine_base_shape(appearance)
+
+	#var bulged:Array = add_bulge(surface_array,Vector3.FORWARD*7, Vector3.FORWARD, 1, 7)
+	#surface_array = bulged
 
 	#var array_mesh := ArrayMesh.new()
 	#array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
@@ -29,6 +33,19 @@ static func array_to_arraymesh(array:Array)->ArrayMesh:
 	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, array)
 
 	return array_mesh
+
+static func determine_base_shape(appearance:Appearance)->Array:
+	var surface_array:Array
+	var size = (appearance.scale.x + appearance.scale.z)/2
+	
+	if appearance.shape == Appearance.ShapeArchetypes.ROCK:
+		surface_array = generate_rock(appearance, size/2.0)
+	elif appearance.shape == Appearance.ShapeArchetypes.CRYSTAL:
+		surface_array = generate_crystal(appearance, size/2.0)
+	elif appearance.shape == Appearance.ShapeArchetypes.BLOB:
+		surface_array = generate_blob(appearance, size/2.0)
+	
+	return surface_array
 
 # == BASE GEOMETRY SHAPES ==
 static func create_plane(subdiv:int, index:int, direction:Vector3, center:Vector3)->Array:
@@ -110,7 +127,6 @@ static func create_sphere(subdiv:int, radius:float)->Array:
 	return surface_array
 
 
-
 # == SHAPE GENERATORS ==
 static func generate_rock(appearance:Appearance, radius:float)->Array:
 	# initialize a base sphere
@@ -133,6 +149,7 @@ static func generate_rock(appearance:Appearance, radius:float)->Array:
 		
 		surface_array[Mesh.ARRAY_VERTEX][i] = vertex_dir * (vertex.length() + displacement)
 	
+	
 	return surface_array
 
 static func generate_crystal(appearance:Appearance, size:float)->Array:
@@ -145,13 +162,25 @@ static func generate_crystal(appearance:Appearance, size:float)->Array:
 
 static func generate_blob(appearance:Appearance, size:float)->Array:
 	# initialize a base shape
-	var surface_array:Array = create_sphere(appearance.subdivisions, size/2)
-	
-	
+	var surface_array:Array = create_sphere(appearance.subdivisions, size)
 	
 	return surface_array
 
-
+static func generate_creature(appearance:Appearance)->Array:
+	var surface_array:Array = determine_base_shape(appearance)
+	var radius = (appearance.scale.x + appearance.scale.z)/4
+	
+	# Add nubs for legs
+	surface_array = add_bulge(surface_array, radius, Vector3.FORWARD + Vector3.DOWN + Vector3.LEFT, .5, radius/2)
+	surface_array = add_bulge(surface_array, radius, Vector3.FORWARD + Vector3.DOWN + Vector3.RIGHT, .5, radius/2)
+	surface_array = add_bulge(surface_array, radius, Vector3.BACK + Vector3.DOWN + Vector3.LEFT, .5, radius/2)
+	surface_array = add_bulge(surface_array, radius, Vector3.BACK + Vector3.DOWN + Vector3.RIGHT, .5, radius/2)
+	
+	surface_array = add_bulge(surface_array, radius, Vector3.FORWARD + Vector3.UP, .5, radius * 1.5)
+	surface_array = add_bulge(surface_array, radius, Vector3.BACK + Vector3.DOWN * 0.5, .4, radius * 1.75)
+	
+	
+	return surface_array
 
 # == MESH DEFORMATIONS ==
 static func stretch(original_mesh:Array, stretch_amount:Vector3)->Array:
@@ -162,7 +191,23 @@ static func add_noise(original_mesh:Array, roughness:float, noise_scale:float, n
 	var final_mesh = original_mesh
 	return final_mesh
 	
-static func add_bulge(original_mesh:Array)->Array:
-	var final_mesh = original_mesh
-	return final_mesh
+static func add_bulge(original_mesh:Array, sphere_radius:float, direction:Vector3, strength:float, radius:float)->Array:
+	var surface_array = original_mesh
+	var position:Vector3 = direction.normalized() * sphere_radius
 	
+	direction = direction.normalized()
+	
+	for i in surface_array[Mesh.ARRAY_VERTEX].size():
+		var vertex:Vector3 = surface_array[Mesh.ARRAY_VERTEX][i] # Grab the vertex coordinates
+	
+		# Determine vertex distance to bulge point
+		var distance = vertex.distance_to(position)
+		if distance < radius:
+			# Determine falloff/influence
+			var influence = 1.0 - (distance / radius)
+			influence = influence * influence * (3.0 - 2.0 * influence) # makes falloff smoother
+			
+			vertex += direction * strength * influence
+			surface_array[Mesh.ARRAY_VERTEX][i] = vertex
+			
+	return surface_array

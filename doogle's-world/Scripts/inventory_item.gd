@@ -13,7 +13,7 @@ func _init() -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if stats.mesh == null:
+	if stats.name == "Meshy":
 		#get_viewport().debug_draw = Viewport.DEBUG_DRAW_WIREFRAME
 		stats.mesh = MeshGenerator.generate_item_mesh(stats)
 		var collision_shape = self.get_parent_node_3d().find_child("CollisionShape3D")
@@ -80,6 +80,7 @@ func set_item_data(data):
 		if key in stats:
 			stats.set(key, data[key])
 		else:
+			# Special cases for class, shiny and quantity because the names don't match
 			if key == "class":
 				stats.set("item_class", data[key])
 			elif key == "shiny":

@@ -63,7 +63,7 @@ enum MaterialProperties {
 @export var base_purity: float
 @export var base_strength: int
 @export var base_acidity: int
-@export var base_tags: Array[String] = []
+@export var base_tags: Array
 
 var heat: float
 var stability: float
@@ -73,7 +73,7 @@ var conductivity: float
 var purity: float
 var strength: int
 var acidity: int
-var tags: Array[String] = []
+var tags: Array
 
 func set_identity(data:Dictionary) -> void:
 	name =        data["name"]

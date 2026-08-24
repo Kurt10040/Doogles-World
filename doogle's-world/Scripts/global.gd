@@ -19,14 +19,14 @@ var spawnables = [
 		"quantity": 1,
 		"name": "Shion",
 		"icon": null,
-		"type": 2,
-		"class": 2,
+		"type": Stats.ItemType.METAL,
+		"class": Stats.ItemClass.ORE,
 		"rarity": 3,
 		"mass": 2.700,
 		"shiny": true,
 		"efficacy": 4,
 		"enchantment": "",
-		"mesh": BoxMesh.new(),
+		"mesh": null,
 		
 		"base_heat": 36,
 		"base_stability": .9,
@@ -43,8 +43,8 @@ var spawnables = [
 		"quantity": 2,
 		"name": "Matther",
 		"icon": null,
-		"type": 5,
-		"class": 1,
+		"type": Stats.ItemType.LIQUID,
+		"class": Stats.ItemClass.ORGANIC,
 		"rarity": 5,
 		"mass": 0.275,
 		"shiny": false,
@@ -90,6 +90,7 @@ var spawnables = [
 
 
 func _ready()->void:
+	# get root scene for scene switcher
 	var root = get_tree().root
 	current_scene = root.get_child(-1)
 	
@@ -98,23 +99,18 @@ func _ready()->void:
 	hotbar_inventory.resize(hotbar_maxsize)
 	equipment_inventory.resize(3)
 
+# Switch current scene
 func goto_scene(path):
 	_deferred_goto_scene.call_deferred(path)
 
+# Wait for scene scripts to finish before switching
 func _deferred_goto_scene(path):
-	# It is now safe to remove the current scene.
 	current_scene.free()
 
 	# Load the new scene.
 	var s = ResourceLoader.load(path)
-
-	# Instance the new scene.
 	current_scene = s.instantiate()
-
-	# Add it to the active scene, as child of root.
 	get_tree().root.add_child(current_scene)
-
-	# Optionally, to make it compatible with the SceneTree.change_scene_to_file() API.
 	get_tree().current_scene = current_scene
 
 # Add a new item to the inventory
@@ -151,7 +147,8 @@ func add_item(item, to_hotbar = true):
 		# Add an inventory slot for the new item
 		increase_inventory_size(item)
 		return true
-	
+
+# Decrease an inventory item or remove it from the inventory
 func remove_item(item_index, is_from_hotbar):
 	if inventory.size() == 0:
 		print("Nothing in inventory")
@@ -194,9 +191,7 @@ func drop_item(item_data):
 	# Set item instance data 
 	item_instance.set_item_data(item_data)
 	
-	#get_tree().current_scene.add_child(item_instance)
-	#item_instance.global_position = player_node.position + Vector3(0,4,0)
-	
+	# Add physics to the dropped item object
 	var rigid_body := RigidBody3D.new()
 	var collision_shape := CollisionShape3D.new()
 	rigid_body.add_child(collision_shape)
@@ -223,6 +218,16 @@ func drop_item(item_data):
 	
 	# Place the spawned item at the player
 	rigid_body.global_position = player_node.position + Vector3(0,4,0)
+	
+	# Set the interaction range for the item
+	var aabb: AABB = item_mesh.get_aabb()
+	var max_radius = aabb.size.length() / 2.0
+	var extents = aabb.size / 2.0
+	var avg_radius = (extents.x + extents.y + extents.z) / 3.0
+	
+	var new_range = SphereShape3D.new()
+	new_range.radius = avg_radius
+	item_instance.find_child("InteractRangeCol").shape = new_range
 
 # Add an item into the player's hotbar
 func add_hotbar_item(item):
@@ -248,6 +253,7 @@ func add_hotbar_item(item):
 
 # Swap inventory items
 func swap_inventory_items(index1, index2, source_container:String, target_container:String):
+	# Change 'hotbar' to 'hotbar_inventory'
 	if "hotbar" in source_container:
 		source_container = "hotbar_inventory"
 	if "hotbar" in target_container:
@@ -257,6 +263,7 @@ func swap_inventory_items(index1, index2, source_container:String, target_contai
 		push_warning("no source slot")
 		return false
 	
+	# Makes sure the slot indexes are valid
 	if index1 < 0 or index1 > self.get(source_container).size() or index2 < 0 or index2 > self.get(target_container).size():
 		push_warning("target index out of bounds")
 		return false

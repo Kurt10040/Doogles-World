@@ -5,12 +5,20 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	for item in Global.spawnables:
+		var item_stats = Stats.new()
+		item_stats.set_base_properties(item)
+		item_stats.set_identity(item)
+		var new_mesh = MeshGenerator.generate_item_mesh(item_stats)
+		item["mesh"] = new_mesh
+	
 	spawn_random_items(Global.spawnables,10, $ItemSpawnArea/CollisionShape3D3)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float):
 	pass
 
+# Get a random 3d position within the area
 func get_random_position(area:CollisionShape3D):
 	# Make sure that the given area is a box shape
 	var box = area.shape as BoxShape3D
@@ -25,17 +33,18 @@ func get_random_position(area:CollisionShape3D):
 	
 	return area.global_transform * offset
 
+# Spawn a specified number of random items picked from a list
 func spawn_random_items(spawnable_items:Array,count:int, area:CollisionShape3D):
 	var spawned_count = 0
 	var attempts = 0
 	
 	while spawned_count < count and attempts < 100:
-		#var area = $ItemSpawnArea/CollisionShape3D2
 		var rand_pos = get_random_position(area)
 		spawn_item(spawnable_items[randi() % spawnable_items.size()], rand_pos)
 		spawned_count += 1
 		attempts += 1
 
+# Spawn an individual item into the 3d world
 func spawn_item(item_data, item_pos):
 	# Load and instance a new item node
 	var item_scene = load(item_data["scene_path"])
@@ -70,3 +79,13 @@ func spawn_item(item_data, item_pos):
 	rigid_body.set_collision_mask_value(3,true)
 
 	rigid_body.global_position = item_pos
+	
+	# Set interaction range for the item
+	var aabb: AABB = item_mesh.get_aabb()
+	var max_radius = aabb.size.length() / 2.0
+	var extents = aabb.size / 2.0
+	var avg_radius = (extents.x + extents.y + extents.z) / 3.0
+	
+	var new_range = SphereShape3D.new()
+	new_range.radius = avg_radius
+	item_instance.find_child("InteractRangeCol").shape = new_range

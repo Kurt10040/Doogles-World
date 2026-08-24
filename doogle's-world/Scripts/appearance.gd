@@ -13,9 +13,11 @@ enum ShapeArchetypes {
 	EQUIPMENT
 }
 
-@export_group("Material")
+@export_group("Base Material")
 @export var core:Stats
-@export var subdivisions: int = 6
+@export var shape: ShapeArchetypes = ShapeArchetypes.ROCK
+@export var scale: Vector3 = Vector3.ONE
+@export var subdivisions: int = 8
 @export var roughness: float = 0.25
 @export var roundness: float = 0.5
 @export var noise_scale: float = 1.0
@@ -24,8 +26,6 @@ enum ShapeArchetypes {
 @export var faceted: bool = false
 
 @export_group("Anatomy")
-@export var scale: Vector3 = Vector3.ONE
-@export var shape: ShapeArchetypes = ShapeArchetypes.ROCK
 @export_subgroup("Limbs")
 @export var limb_count:int = 4
 @export var limb_length:float = 1.0
