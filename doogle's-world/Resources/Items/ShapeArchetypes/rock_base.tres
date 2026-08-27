@@ -1,3 +1,17 @@
-[gd_resource type="Resource" format=3 uid="uid://cumc416aoiqob"]
+[gd_resource type="Resource" script_class="Appearance" format=3 uid="uid://cumc416aoiqob"]
+
+[ext_resource type="Script" uid="uid://cxti1u26m42h" path="res://Scripts/appearance.gd" id="1_av7tu"]
 
 [resource]
+script = ExtResource("1_av7tu")
+scale = Vector3(2, 1, 1.2)
+subdivisions = 6
+roughness = 0.5
+noise_seed = 3
+angularity = 0.1
+faceted = true
+limb_count = 0
+limb_length = 0.0
+eye_count = 0
+horn_count = 0
+horn_size = 0.0

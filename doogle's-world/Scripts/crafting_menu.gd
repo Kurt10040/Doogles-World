@@ -2,10 +2,15 @@ extends Control
 
 # Object references
 @onready var grid_container: GridContainer = $GridContainer
+@onready var slot_container: HBoxContainer = $Panel/SlotContainer
 @onready var hotbar_container: HBoxContainer = $"../../../InventoryHotbar/InventoryHotbar/HBoxContainer"
 
+
 @export var grid_size:int = 4
-var dragged_slot = null
+var dragged_slot:Control = null
+
+var item_1:Control = null
+var item_2:Control = null
 
 
 # Called when the node enters the scene tree for the first time.
@@ -46,15 +51,36 @@ func _on_drag_start(slot_control:Control):
 # When the player drops the slot onto another slot
 func _on_drag_end():
 	var target = get_slot_under_mouse()
-	print(target)
 	
 	# Drop the slot only if the target is a valid target
 	if target["slot"] != null and dragged_slot != target["slot"]:
 		if target["container"] == "inventory":
 			drop_slot(dragged_slot, target["slot"], "crafting", "inventory")
-		else:
+		elif target["container"] == "hotbar":
 			drop_slot(dragged_slot,target["slot"], "crafting", "hotbar")
+		else:
+			set_crafting_slot(dragged_slot)
+			print(target)
+		
+	if dragged_slot == target["slot"]:
+		set_crafting_slot(dragged_slot)
+		#print(target["slot"].item)
+	
 	dragged_slot = null # clear the variable
+
+func set_crafting_slot(slot:Control):
+	if item_1 == null and slot != item_2:
+		item_1 = slot
+		slot.reparent(slot_container)
+	elif item_1 != null and item_2 == null and item_1 != dragged_slot:
+		item_2 = slot
+		slot.reparent(slot_container)
+	elif slot == item_1:
+		item_1 = null
+		slot.reparent(grid_container)
+	elif slot == item_2:
+		item_2 = null
+		slot.reparent(grid_container)
 
 # Get the slot that the mouse is hovering over
 func get_slot_under_mouse()->Dictionary:
@@ -66,6 +92,13 @@ func get_slot_under_mouse()->Dictionary:
 		
 		if slot_rect.has_point(mouse_pos):
 			return {"slot":slot, "container":"crafting"}
+	
+	for slot in slot_container.get_children():
+		var slot_rect = Rect2(slot.global_position, slot.size)
+		
+		if slot_rect.has_point(mouse_pos):
+			return {"slot":slot, "container":"crafting_slot"}
+	
 	
 	# Loop through the hotbar slot container to find the slot the mouse is hovering over
 	for slot in hotbar_container.get_children():

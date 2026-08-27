@@ -7,8 +7,9 @@ static func generate_item_mesh(item_stats:Stats)->ArrayMesh:
 	
 	var appearance:Appearance = AppearanceGenerator.generate_appearance(item_stats)
 	#appearance.scale = Vector3(1.6,1.2,1)
-	appearance.scale = Vector3(2,2,2)
+	#appearance.scale = Vector3(2,2,2)
 	appearance.noise_seed = randi_range(1,100)
+	print(appearance.noise_seed)
 	#appearance.shape = Appearance.ShapeArchetypes.BLOB
 	
 	var surface_array:Array
@@ -16,14 +17,11 @@ static func generate_item_mesh(item_stats:Stats)->ArrayMesh:
 		print("generating creature mesh")
 		surface_array = generate_creature(appearance)
 	else:
-		print("generating item mesh")
 		surface_array = determine_base_shape(appearance)
+		
+	if appearance.faceted == true:
+		surface_array = make_faceted(surface_array)
 
-	#var bulged:Array = add_bulge(surface_array,Vector3.FORWARD*7, Vector3.FORWARD, 1, 7)
-	#surface_array = bulged
-
-	#var array_mesh := ArrayMesh.new()
-	#array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
 	var array_mesh := array_to_arraymesh(surface_array)
 
 	return array_mesh
@@ -38,10 +36,8 @@ static func determine_base_shape(appearance:Appearance)->Array:
 	var surface_array:Array
 	var size = (appearance.scale.x + appearance.scale.z)/2
 	
-	if appearance.shape == Appearance.ShapeArchetypes.ROCK:
+	if appearance.shape == Appearance.ShapeArchetypes.ROCK or appearance.shape == Appearance.ShapeArchetypes.CRYSTAL:
 		surface_array = generate_rock(appearance, size/2.0)
-	elif appearance.shape == Appearance.ShapeArchetypes.CRYSTAL:
-		surface_array = generate_crystal(appearance, size/2.0)
 	elif appearance.shape == Appearance.ShapeArchetypes.BLOB:
 		surface_array = generate_blob(appearance, size/2.0)
 	
@@ -126,6 +122,47 @@ static func create_sphere(subdiv:int, radius:float)->Array:
 		
 	return surface_array
 
+static func make_faceted(surface_array:Array)->Array:
+	var old_positions: PackedVector3Array = surface_array[Mesh.ARRAY_VERTEX]
+	var old_indices: PackedInt32Array = surface_array[Mesh.ARRAY_INDEX]
+
+	var positions := PackedVector3Array()
+	var normals := PackedVector3Array()
+	var indices := PackedInt32Array()
+
+	for i in range(0, old_indices.size(), 3):
+		var a: Vector3 = old_positions[old_indices[i]]
+		var b: Vector3 = old_positions[old_indices[i + 1]]
+		var c: Vector3 = old_positions[old_indices[i + 2]]
+
+		# Match triangle winding order.
+		var face_normal := (b - a).cross(a - c).normalized()
+
+		var start_index := positions.size()
+
+		# Three unique vertices for this triangle.
+		positions.append(a)
+		positions.append(b)
+		positions.append(c)
+
+		# The same normal is assigned to all three vertices.
+		normals.append(face_normal)
+		normals.append(face_normal)
+		normals.append(face_normal)
+
+		indices.append(start_index)
+		indices.append(start_index + 1)
+		indices.append(start_index + 2)
+
+	var faceted_array: Array = []
+	faceted_array.resize(Mesh.ARRAY_MAX)
+
+	faceted_array[Mesh.ARRAY_VERTEX] = positions
+	faceted_array[Mesh.ARRAY_NORMAL] = normals
+	faceted_array[Mesh.ARRAY_INDEX] = indices
+
+	return faceted_array
+
 
 # == SHAPE GENERATORS ==
 static func generate_rock(appearance:Appearance, radius:float)->Array:
@@ -148,7 +185,6 @@ static func generate_rock(appearance:Appearance, radius:float)->Array:
 		var displacement = noise_value * appearance.roughness * radius
 		
 		surface_array[Mesh.ARRAY_VERTEX][i] = vertex_dir * (vertex.length() + displacement)
-	
 	
 	return surface_array
 

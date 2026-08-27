@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://d512j467hu2p"]
 
+[ext_resource type="Script" uid="uid://cwqc03xrkw73c" path="res://Scripts/homebase.gd" id="1_1lh2w"]
 [ext_resource type="PackedScene" uid="uid://drbj4ucipnhwi" path="res://Scenes/Player.tscn" id="1_g3340"]
 [ext_resource type="Script" uid="uid://ds5so7c5r27w0" path="res://Scripts/crafting.gd" id="2_24bm8"]
 [ext_resource type="PackedScene" uid="uid://cesq0p027yb7f" path="res://Interaction/Interaction Area/interactable.tscn" id="3_thwuy"]
 [ext_resource type="PackedScene" uid="uid://beqdg5jc71hmf" path="res://Scenes/inventory_item.tscn" id="4_w60ix"]
 [ext_resource type="Script" uid="uid://b8c7dh81pseph" path="res://Scripts/stats.gd" id="5_wq34v"]
+[ext_resource type="AudioStream" uid="uid://b4ainaimgx3os" path="res://Assets/Sounds/SFX/Music/journey.wav" id="6_wq34v"]
 
 [sub_resource type="Environment" id="Environment_6djfk"]
 background_mode = 1
@@ -20,6 +22,10 @@ size = Vector3(50, 1, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_24bm8"]
 size = Vector3(50, 1, 50)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1lh2w"]
+height = 6.8466797
+radius = 3.3393555
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1lh2w"]
 points = PackedVector3Array(0.75, -0.565, -0.45, -0.725, -0.565, -0.45, 0.75, 0.575, -0.45, -0.75, -0.565, 0.45, 0.75, 0.575, 0.45, 0.75, -0.565, 0.45)
@@ -49,7 +55,7 @@ base_conductivity = 0.067
 base_purity = 0.65
 base_strength = 50
 base_acidity = 2
-base_tags = Array[String](["Herb", "Dead"])
+base_tags = ["Herb", "Dead"]
 metadata/_custom_type_script = "uid://b8c7dh81pseph"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7hsig"]
@@ -101,6 +107,19 @@ ao_enabled = true
 [sub_resource type="BoxShape3D" id="BoxShape3D_w60ix"]
 size = Vector3(3.664959, 4.855697, 9.619739)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_1lh2w"]
+size = Vector3(1.8583984, 1.210083, 9.1311035)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4jke0"]
+size = Vector3(1.1069336, 0.5986328, 3.2304688)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qt213"]
+size = Vector3(1.1224365, 1.6691895, 2.0722656)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7hsig"]
+height = 0.35290527
+radius = 0.7270508
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w60ix"]
 emission_enabled = true
 emission = Color(0.7882353, 0.8666667, 1, 1)
@@ -127,6 +146,7 @@ inner_radius = 1.973
 outer_radius = 2.319
 
 [node name="Base" type="Node3D" unique_id=471855751]
+script = ExtResource("1_1lh2w")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1774692921]
 environment = SubResource("Environment_6djfk")
@@ -214,6 +234,13 @@ metadata/_edit_lock_ = true
 [node name="door" type="CSGBox3D" parent="." unique_id=224827615]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9060411, 18.72978)
 size = Vector3(5.068115, 5.010132, 1.0356445)
+
+[node name="Interactable" parent="door" unique_id=716970301 instance=ExtResource("3_thwuy")]
+interact_name = "Go Outside"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="door/Interactable" unique_id=1319077297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.79052734, 0.58600426)
+shape = SubResource("CylinderShape3D_1lh2w")
 
 [node name="door2" type="CSGBox3D" parent="." unique_id=1686818083]
 transform = Transform3D(0.97752273, 0, 0.21083006, 0, 1, 0, -0.21083006, 0, 0.97752273, -3.5165515, 2.9060411, -18.36223)
@@ -556,7 +583,7 @@ radius = 0.81933594
 height = 0.26635742
 material = SubResource("StandardMaterial3D_wq34v")
 
-[node name="Interactable" parent="CraftingStation" unique_id=716970301 instance=ExtResource("3_thwuy")]
+[node name="Interactable" parent="CraftingStation" unique_id=885897037 instance=ExtResource("3_thwuy")]
 interact_name = "Craft"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CraftingStation/Interactable" unique_id=274999831]
@@ -564,7 +591,7 @@ transform = Transform3D(1, 0, -4.7683716e-07, 0, 0.99999976, 0, 2.9802322e-08, 0
 shape = SubResource("BoxShape3D_w60ix")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="CraftingStation" unique_id=586255694]
-transform = Transform3D(0.7328967, -0.31797674, 0.041871954, -0.08151173, -0.08365726, 0.79142725, -0.31019077, -0.72930956, -0.109038696, 0.5779953, 4.031193, 2.452563)
+transform = Transform3D(0.9161209, -0.397471, 0.052339815, -0.1018894, -0.10457128, 0.9892843, -0.38773856, -0.9116368, -0.13629802, 0.5779953, 4.031193, 2.452563)
 spot_range = 5.228518
 spot_angle = 31.35287
 
@@ -585,6 +612,24 @@ size = Vector3(0.8, 0.3, 0.8)
 transform = Transform3D(1, 0, -2.9802322e-08, 0, 0.99999976, 0, 2.9802322e-08, 0, 1, 0.21596529, 0.6863221, -3.6381114)
 size = Vector3(0.90000004, 0.2, 0.90000004)
 material = SubResource("StandardMaterial3D_wq34v")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CraftingStation" unique_id=455214518]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CraftingStation/StaticBody3D" unique_id=978852534]
+transform = Transform3D(1, 0, -2.9802322e-08, 0, 0.99999976, 0, 2.9802322e-08, 0, 1, 0.10107422, 0.105041385, 0)
+shape = SubResource("BoxShape3D_1lh2w")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="CraftingStation/StaticBody3D" unique_id=852969705]
+transform = Transform3D(1, 0, -2.9802322e-08, 0, 0.99999976, 0, 2.9802322e-08, 0, 1, 1.4629135, 0.41617584, 0)
+shape = SubResource("BoxShape3D_4jke0")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="CraftingStation/StaticBody3D" unique_id=1256242633]
+transform = Transform3D(0.9498138, 0, 0.31281564, 0, 0.99999976, 0, -0.31281564, 0, 0.9498138, -0.37077808, 1.3949932, 3.1598973)
+shape = SubResource("BoxShape3D_qt213")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="CraftingStation/StaticBody3D" unique_id=53621198]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.99999976, 0, 0, 0, 0.9999999, 0.7021389, 0.78384817, 0.042572975)
+shape = SubResource("CylinderShape3D_7hsig")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1881645165]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14870977, 0)
@@ -607,3 +652,20 @@ height = 2.1437988
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7051783, 0)
 radius = 2.005371
 height = 0.3916626
+
+[node name="bg_music_player" type="AudioStreamPlayer" parent="." unique_id=2073966166]
+stream = ExtResource("6_wq34v")
+volume_db = -15.0
+autoplay = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=976378318]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1760903784]
+modulate = Color(0, 0, 0, 1)
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

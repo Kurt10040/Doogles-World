@@ -53,6 +53,9 @@ func _on_drag_end():
 			drop_slot(dragged_slot, target["slot"], "inventory", "inventory")
 		else:
 			drop_slot(dragged_slot,target["slot"], "inventory", "hotbar")
+	
+	if dragged_slot == target["slot"]:
+		print("slot clicked")
 	dragged_slot = null # clear the variable
 
 # Get the slot that the mouse is hovering over

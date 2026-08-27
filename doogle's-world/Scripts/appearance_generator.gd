@@ -41,14 +41,15 @@ static func generate_appearance(stats:Stats)->Appearance:
 	if stats.type == Stats.ItemType.ROCK:
 		appearance.roughness += 0.2
 		appearance.angularity += 0.1
+		appearance = load("res://Resources/Items/ShapeArchetypes/crystal_base.tres")
 	if stats.type == Stats.ItemType.METAL:
 		appearance.roughness -= 0.2
 		appearance.angularity += 0.15
 	if stats.type == Stats.ItemType.WOOD:
-		appearance.scale *= Vector3(1, 1.2, 1)
 		appearance.roughness += 0.15
+		appearance.scale *= Vector3(1, 1.2, 1)
 	if stats.type == Stats.ItemType.LIQUID:
-		appearance.roundness += 0.5
 		appearance.roughness -= 0.2
+		appearance.roundness += 0.5
 
 	return appearance

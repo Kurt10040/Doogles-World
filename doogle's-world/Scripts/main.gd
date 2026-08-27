@@ -3,16 +3,25 @@ extends Node3D
 @onready var items: Node3D = $Items
 @onready var item_spawn_area: Area3D = $ItemSpawnArea
 
-# Called when the node enters the scene tree for the first time.
+@onready var stream_player:AudioStreamPlayer = $bg_music_player
+@onready var whiteout: ColorRect = $CanvasLayer/ColorRect
+
+# Called when the node enters the scene tree for the f$CanvasLayer/ColorRectirst time.
 func _ready():
-	for item in Global.spawnables:
-		var item_stats = Stats.new()
-		item_stats.set_base_properties(item)
-		item_stats.set_identity(item)
-		var new_mesh = MeshGenerator.generate_item_mesh(item_stats)
-		item["mesh"] = new_mesh
+	var bg_music:Array = ["res://Assets/Sounds/SFX/Music/blossom.wav", "res://Assets/Sounds/SFX/Music/journey.wav", "res://Assets/Sounds/SFX/Music/regrowth wip.wav", "res://Assets/Sounds/SFX/Music/start.wav"]
+	stream_player.stream = load(bg_music[randi_range(0,3)])
+	stream_player.volume_db = -15
+	stream_player.play()
 	
-	spawn_random_items(Global.spawnables,10, $ItemSpawnArea/CollisionShape3D3)
+	for area in item_spawn_area.get_children():
+		spawn_random_items(Global.spawnables,15, area)
+	
+	whiteout.mouse_filter = Control.MOUSE_FILTER_STOP
+	var tween = create_tween()
+	tween.tween_property(whiteout, "modulate", Color(0,0,0,0), 1.0)
+	await tween.finished
+	whiteout.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float):
@@ -40,7 +49,14 @@ func spawn_random_items(spawnable_items:Array,count:int, area:CollisionShape3D):
 	
 	while spawned_count < count and attempts < 100:
 		var rand_pos = get_random_position(area)
-		spawn_item(spawnable_items[randi() % spawnable_items.size()], rand_pos)
+		
+		var item = spawnable_items[randi() % spawnable_items.size()]
+		var item_stats = Stats.new()
+		item_stats.set_base_properties(item)
+		item_stats.set_identity(item)
+		var new_mesh = MeshGenerator.generate_item_mesh(item_stats)
+		item["mesh"] = new_mesh
+		spawn_item(item, rand_pos)
 		spawned_count += 1
 		attempts += 1
 

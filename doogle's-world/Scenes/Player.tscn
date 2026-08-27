@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://drbj4ucipnhwi"]
 
 [ext_resource type="Script" uid="uid://brri06vk5dwa0" path="res://Scripts/player.gd" id="1_kyqiw"]
-[ext_resource type="PackedScene" uid="uid://byvjg8bq7tgd0" path="res://Assets/lowpolychar2.glb" id="2_megsn"]
+[ext_resource type="PackedScene" uid="uid://cebn0xaifgakq" path="res://Assets/lowpolychar_fix.glb" id="2_yoq75"]
 [ext_resource type="PackedScene" uid="uid://4iar7xi41ad" path="res://Interaction/Interaction Area/interact_component.tscn" id="3_gntrk"]
 [ext_resource type="Script" uid="uid://d270e57odyil2" path="res://Scripts/hud.gd" id="4_dewec"]
 [ext_resource type="PackedScene" uid="uid://drg3dtfm2q0pw" path="res://Scenes/inventory_ui.tscn" id="5_5ixxa"]
@@ -39,8 +39,30 @@ collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_kyqiw")
 
-[node name="PlayerMesh" parent="." unique_id=613133545 instance=ExtResource("2_megsn")]
-transform = Transform3D(-0.675, 0, -5.9010375e-08, 0, 0.675, 0, 5.9010375e-08, 0, -0.675, 0, 0, 0)
+[node name="PlayerMesh" parent="." unique_id=1938445988 instance=ExtResource("2_yoq75")]
+transform = Transform3D(-0.675, 0, 5.9010375e-08, 0, 0.675, 0, -5.9010375e-08, 0, -0.675, 0, 0, 0)
+
+[node name="Skeleton3D" parent="PlayerMesh/Armature" parent_id_path=PackedInt32Array(1938445988, 441183536) index="0" unique_id=1307055896]
+bones/2/rotation = Quaternion(-3.5527103e-15, 1.19209275e-07, -1.7670482e-28, 1)
+bones/3/rotation = Quaternion(3.3881318e-21, 1.0658141e-14, 8.4703275e-22, 1)
+bones/5/rotation = Quaternion(3.3881318e-21, -3.5527137e-15, 1.2037062e-35, 1)
+bones/7/rotation = Quaternion(1.9008431e-07, 4.9063207e-08, -0.5098103, 0.86028695)
+bones/8/rotation = Quaternion(6.129995e-08, 6.1066125e-08, -0.12473756, 0.99218976)
+bones/9/rotation = Quaternion(1.9040547e-08, 7.35266e-08, -0.030390127, 0.9995381)
+bones/12/rotation = Quaternion(-1.8499218e-08, -2.0459854e-07, 0.1339647, 0.9909861)
+bones/13/rotation = Quaternion(-8.914213e-09, 2.3555049e-07, 0.053214233, 0.99858314)
+bones/14/rotation = Quaternion(2.7422121e-08, -5.3021147e-08, 0.96635514, -0.25721148)
+bones/15/rotation = Quaternion(-0.013052014, 0.0027248699, -0.2385858, 0.9710299)
+bones/16/rotation = Quaternion(0.7166785, 0.014394178, 0.0024738053, 0.6972508)
+bones/17/rotation = Quaternion(5.7248002e-08, -7.554281e-08, 0.96680385, 0.2555198)
+bones/18/rotation = Quaternion(-0.014092961, -0.0025449188, 0.25087273, 0.96791416)
+bones/19/rotation = Quaternion(0.71617204, -0.025182016, -0.0360226, 0.6965385)
+
+[node name="Bone_005" parent="PlayerMesh/Armature/Skeleton3D" index="0" unique_id=431618861]
+transform = Transform3D(1, -7.105432e-15, 2.3841855e-07, -7.1054274e-15, 0.99999994, 5.960466e-08, -2.3841856e-07, -5.960466e-08, 0.99999994, -1.9788863e-14, 2.7850342, -1.6600099e-07)
+
+[node name="Bone_003" parent="PlayerMesh/Armature/Skeleton3D" index="3" unique_id=357134890]
+transform = Transform3D(1, -7.105431e-15, 2.3841855e-07, -7.105428e-15, 0.99999994, 5.960466e-08, -2.3841856e-07, -5.960466e-08, 0.99999994, -1.357115e-14, 1.9099693, -1.1384306e-07)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=43280144]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4423273, 0)
@@ -210,7 +232,6 @@ horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="CraftingMenu" type="CanvasLayer" parent="." unique_id=1910111784]
-visible = false
 
 [node name="outer_frame" type="Panel" parent="CraftingMenu" unique_id=1650616236]
 custom_minimum_size = Vector2(100, 100)
@@ -228,9 +249,14 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bhhdu")
 
 [node name="Crafting" type="Control" parent="CraftingMenu/outer_frame" unique_id=2030506754]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("8_bhhdu")
 
 [node name="GridContainer" type="GridContainer" parent="CraftingMenu/outer_frame/Crafting" unique_id=1724317545]
@@ -240,13 +266,82 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 16.0
-offset_top = 45.0
-offset_right = 519.0
-offset_bottom = 385.0
+offset_left = -435.0
+offset_top = -150.0
+offset_right = 68.0
+offset_bottom = 190.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 9
+
+[node name="Panel" type="Panel" parent="CraftingMenu/outer_frame/Crafting" unique_id=619105016]
+layout_mode = 0
+offset_left = 90.0
+offset_top = -150.0
+offset_right = 290.0
+offset_bottom = -50.0
+
+[node name="SlotContainer" type="HBoxContainer" parent="CraftingMenu/outer_frame/Crafting/Panel" unique_id=1617182353]
+layout_mode = 0
+offset_right = 204.00012
+offset_bottom = 100.0
+
+[node name="ResultStats" type="Panel" parent="CraftingMenu/outer_frame/Crafting" unique_id=501889704]
+layout_mode = 0
+offset_left = 90.0
+offset_top = -45.0
+offset_right = 460.0
+offset_bottom = 214.0
+
+[node name="ResultName" type="Label" parent="CraftingMenu/outer_frame/Crafting/ResultStats" unique_id=492593193]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 82.0
+offset_bottom = 47.0
+theme_override_font_sizes/font_size = 23
+text = "Name"
+
+[node name="ResultClass" type="Label" parent="CraftingMenu/outer_frame/Crafting/ResultStats" unique_id=417143806]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 220.0
+offset_right = 159.0
+offset_bottom = 243.0
+text = "Class"
+vertical_alignment = 1
+
+[node name="ResultType" type="Label" parent="CraftingMenu/outer_frame/Crafting/ResultStats" unique_id=271404120]
+layout_mode = 0
+offset_left = 233.0
+offset_top = 220.0
+offset_right = 280.0
+offset_bottom = 243.0
+text = "Type"
+vertical_alignment = 1
+
+[node name="ResultWeight" type="Label" parent="CraftingMenu/outer_frame/Crafting/ResultStats" unique_id=1002909442]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -38.0
+offset_right = 62.0
+offset_bottom = -15.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.41674656, 0.4167466, 0.41674656, 1)
+text = "00.000kg"
+vertical_alignment = 2
+
+[node name="Button" type="Button" parent="CraftingMenu/outer_frame/Crafting" unique_id=13209104]
+layout_mode = 0
+offset_left = 295.0
+offset_top = -150.0
+offset_right = 460.0
+offset_bottom = -50.0
+theme_override_font_sizes/font_size = 53
+text = "Craft"
 
 [node name="Label" type="Label" parent="CraftingMenu/outer_frame" unique_id=1118661674]
 layout_mode = 1

@@ -19,7 +19,7 @@ var spawnables = [
 		"quantity": 1,
 		"name": "Shion",
 		"icon": null,
-		"type": Stats.ItemType.METAL,
+		"type": Stats.ItemType.ROCK,
 		"class": Stats.ItemClass.ORE,
 		"rarity": 3,
 		"mass": 2.700,
@@ -43,7 +43,7 @@ var spawnables = [
 		"quantity": 2,
 		"name": "Matther",
 		"icon": null,
-		"type": Stats.ItemType.LIQUID,
+		"type": Stats.ItemType.PLANT,
 		"class": Stats.ItemClass.ORGANIC,
 		"rarity": 5,
 		"mass": 0.275,
@@ -67,8 +67,8 @@ var spawnables = [
 		"quantity": 1,
 		"name": "Chickenita",
 		"icon": null,
-		"type": 7,
-		"class": 1,
+		"type": Stats.ItemType.MAGIC,
+		"class": Stats.ItemClass.CRYSTAL,
 		"rarity": 6,
 		"mass": 0.300,
 		"shiny": true,
@@ -151,7 +151,7 @@ func add_item(item, to_hotbar = true):
 # Decrease an inventory item or remove it from the inventory
 func remove_item(item_index, is_from_hotbar):
 	if inventory.size() == 0:
-		print("Nothing in inventory")
+		pass
 		
 	if is_from_hotbar: # Remove the item from the hotbar
 		if hotbar_inventory[item_index]:
@@ -217,7 +217,7 @@ func drop_item(item_data):
 	rigid_body.set_collision_mask_value(3,true)
 	
 	# Place the spawned item at the player
-	rigid_body.global_position = player_node.position + Vector3(0,4,0)
+	rigid_body.global_position = player_node.to_global(Vector3(0,4,-6))
 	
 	# Set the interaction range for the item
 	var aabb: AABB = item_mesh.get_aabb()

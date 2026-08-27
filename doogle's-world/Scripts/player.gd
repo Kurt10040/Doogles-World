@@ -9,14 +9,23 @@ extends CharacterBody3D
 @onready var player_mesh:Node3D = $PlayerMesh
 @onready var animation_player:AnimationPlayer = $PlayerMesh/AnimationPlayer
 
-# Constants for player movement calculations
-var player_speed = 6
-const JUMP_VELOCITY = 4.5
-const navigation_speed = 1.0
+var jump_sound:AudioStreamMP3 = preload("res://Assets/Sounds/SFX/jofae-jump-whoosh.mp3")
+var footsteps:Array[AudioStreamOggVorbis] = [
+	preload("res://Assets/Sounds/SFX/Footsteps/footstep_concrete_000.ogg"),
+	preload("res://Assets/Sounds/SFX/Footsteps/footstep_concrete_001.ogg"),
+	preload("res://Assets/Sounds/SFX/Footsteps/footstep_concrete_002.ogg"),
+	preload("res://Assets/Sounds/SFX/Footsteps/footstep_concrete_003.ogg")
+] 
+
+# C"res://Assets/Sounds/SFX/Footsteps/footstep_grass_000.ogg"onstants for player movement calculations
+var player_speed:float = 6
+const JUMP_VELOCITY:float = 4.5
+const navigation_speed:float = 1.0
 var player_direction:float = 0.0
 var mesh_direction:float = 0.0
 var camera_dir:float = 0.0
 var look_down:int = 0
+
 
 func _ready() -> void:
 	Global.set_player_ref(self)   # Set a global reference to the player scene object
@@ -33,7 +42,7 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_pressed("move_jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-		animation_player.play("Main Jump",-1,2,false)
+		_play_footstep()
 
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")    # WASD movement
@@ -46,7 +55,7 @@ func _physics_process(delta: float) -> void:
 		mesh_direction = atan2(input_dir.x, input_dir.y) + deg_to_rad(player_direction)
 		
 		if is_on_floor_only():
-			animation_player.play("Run",-1,3)
+			animation_player.play("Run",-1,3 * player_speed/6)
 		else:
 			animation_player.pause()
 				
@@ -83,12 +92,12 @@ func _input(event):
 		get_tree().paused = !get_tree().paused
 		
 	if event.is_action_pressed("rotate_player_left"):
-		player_direction += 15
+		player_direction += 45
 		if player_direction >= 360:
 			player_direction = 0
 	
 	if event.is_action_pressed("rotate_player_right"):
-		player_direction -= 15
+		player_direction -= 45
 		if player_direction <= -360:
 			player_direction = 0
 			
@@ -97,6 +106,14 @@ func _input(event):
 	elif event.is_action_released("player_sprint"):
 		player_speed = 6
 
+func _play_footstep():
+	var sound_player = AudioStreamPlayer3D.new()
+	sound_player.stream = footsteps.pick_random()
+	get_tree().root.add_child(sound_player)
+	sound_player.global_position = position
+	sound_player.play()
+	await sound_player.finished
+	sound_player.queue_free()
 
 func _on_close_button_pressed() -> void:
 	crafting_ui.visible = false

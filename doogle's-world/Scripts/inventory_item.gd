@@ -5,6 +5,7 @@ extends Node3D
 
 var scene_path: String = "res://Scenes/inventory_item.tscn"
 
+@onready var interact_hitbox:CollisionShape3D = $Interactable/InteractRangeCol
 @onready var object_mesh:MeshInstance3D = $Mesh
 @onready var interactable = $Interactable
 
@@ -16,12 +17,12 @@ func _ready():
 	if stats.name == "Meshy":
 		#get_viewport().debug_draw = Viewport.DEBUG_DRAW_WIREFRAME
 		stats.mesh = MeshGenerator.generate_item_mesh(stats)
-		var collision_shape = self.get_parent_node_3d().find_child("CollisionShape3D")
+		var collision_shape:CollisionShape3D = self.get_parent_node_3d().find_child("CollisionShape3D")
 		var convex:ConvexPolygonShape3D = stats.mesh.create_convex_shape()
 		collision_shape.shape = convex
 		collision_shape.transform = self.object_mesh.transform
 		
-		var interact_hitbox:CollisionShape3D = self.find_child("InteractRangeCol")
+		
 		interact_hitbox.scale =  Vector3(2,2,2)
 	
 	# Change the mesh of the item to the specified mesh in game
@@ -35,6 +36,27 @@ func _process(_delta: float) -> void:
 	# Change the mesh of the item to the specified mesh while in the editor
 	if Engine.is_editor_hint() and stats:
 		object_mesh.mesh = stats.mesh
+		
+	if not Engine.is_editor_hint():
+		if Global.player_node:
+			var direction = (Global.player_node.global_position - global_position)
+			var distance = direction.length()
+			
+			var parent_body:RigidBody3D = self.get_parent_node_3d()
+			if distance < 5:
+				direction = direction.normalized()
+				var force = direction * 50
+				
+				# Apply the force to the center of the rigid body
+				parent_body.apply_central_force(force)
+				parent_body.contact_monitor = true
+				parent_body.max_contacts_reported = 5
+				if Global.player_node in parent_body.get_colliding_bodies():
+					on_interact()
+				if distance < 0.5:
+					print("SLATTT")
+			else:
+				parent_body.contact_monitor = false
 
 # Function that runs whenever the player enters the range of an interactable object 
 func on_interact():

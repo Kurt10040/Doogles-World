@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Doogle's World"
-run/main_scene="uid://dhlxoup6co2ug"
+run/main_scene="uid://bedvqufk6co40"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Appearance" format=3 uid="uid://bno4bq3buh6qe"]
+
+[ext_resource type="Script" uid="uid://cxti1u26m42h" path="res://Scripts/appearance.gd" id="1_q7pgt"]
+
+[resource]
+script = ExtResource("1_q7pgt")
+shape = 1
+scale = Vector3(2, 1, 1)
+subdivisions = 2
+roughness = 1.0
+noise_scale = 0.5
+noise_seed = 16
+angularity = 1.0
+faceted = true
+metadata/_custom_type_script = "uid://cxti1u26m42h"

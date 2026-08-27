@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://bedvqufk6co40"]
 
+[ext_resource type="Script" uid="uid://dmfwvrlsh7du6" path="res://Scripts/main_menu.gd" id="1_5n0dv"]
 [ext_resource type="Script" uid="uid://boeob6r1de2gq" path="res://Scripts/teleport.gd" id="1_6m47u"]
 [ext_resource type="PackedScene" uid="uid://bhnwc2a0th6n3" path="res://Assets/Models/Spaceship5.fbx" id="2_84iac"]
 [ext_resource type="PackedScene" uid="uid://cesq0p027yb7f" path="res://Interaction/Interaction Area/interactable.tscn" id="3_5n0dv"]
@@ -24,7 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://bxdrik0ta5st0" path="res://Assets/Models/Plant_Small.fbx" id="22_ujm45"]
 [ext_resource type="PackedScene" uid="uid://b1ksmsjrri6g6" path="res://Assets/Models/roche.fbx" id="23_aj2v6"]
 [ext_resource type="PackedScene" uid="uid://8rxphsmmqa1i" path="res://Assets/Models/Resource_Rock_1.fbx" id="24_vj5y7"]
-[ext_resource type="Shader" uid="uid://fcvyydwoju2m" path="res://Assets/Shaders/new_shader.gdshader" id="25_84iac"]
+[ext_resource type="Shader" uid="uid://fcvyydwoju2m" path="res://Assets/Shaders/blur.gdshader" id="25_84iac"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fevyy"]
 albedo_color = Color(0.5489433, 0.20802692, 0.24477106, 1)
@@ -241,10 +242,11 @@ dof_blur_near_transition = 242.63
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5n0dv"]
 shader = ExtResource("25_84iac")
-shader_parameter/blur_radius = 8
-shader_parameter/blur_strength = 1.0
+shader_parameter/blur_radius = 12
+shader_parameter/blur_strength = 10.0
 
 [node name="MainMenu" type="Node3D" unique_id=1000881732]
+script = ExtResource("1_5n0dv")
 
 [node name="Environment" type="Node3D" parent="." unique_id=1415400368]
 
@@ -519,10 +521,12 @@ camera_attributes = SubResource("CameraAttributesPractical_ffqkl")
 transform = Transform3D(0.7509291, -0.6476696, -0.12895468, -0.32198715, -0.52957565, 0.7847764, -0.576567, -0.54778993, -0.60621524, 0, 4.937, 0)
 shadow_enabled = true
 
-[node name="View2" type="Node3D" parent="." unique_id=325580241]
+[node name="CameraViews" type="Node3D" parent="." unique_id=1202598683]
+
+[node name="View2" type="Node3D" parent="CameraViews" unique_id=325580241]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 106.421, 7.673, -80.195)
 
-[node name="View1" type="Node3D" parent="." unique_id=1900255173]
+[node name="View1" type="Node3D" parent="CameraViews" unique_id=1900255173]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21.23024, 0)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1507232327]
@@ -552,6 +556,21 @@ offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Play"
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=842430564]
+modulate = Color(1, 1, 1, 0)
+z_index = 99
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="bg_music_player" type="AudioStreamPlayer" parent="." unique_id=867483507]
+autoplay = true
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
 
 [editable path="Environment/TallRocks/crystal_13"]
 [editable path="Environment/Trees/Resource_PineTree_Group"]
