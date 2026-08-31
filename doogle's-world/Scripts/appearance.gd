@@ -16,6 +16,7 @@ enum ShapeArchetypes {
 @export_group("Base Material")
 ## Core material of type Stats that the appearance will be based off of 
 @export var core:Stats
+@export var material:StandardMaterial3D
 ## Mesh shape archetype 
 @export var shape: ShapeArchetypes = ShapeArchetypes.ROCK
 ## Mesh 3D scale 

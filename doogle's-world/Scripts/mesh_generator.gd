@@ -21,7 +21,9 @@ static func generate_item_mesh(item_stats:Stats)->ArrayMesh:
 	if appearance.faceted == true:
 		surface_array = make_faceted(surface_array)
 
-	var array_mesh := array_to_arraymesh(surface_array)
+	var array_mesh:ArrayMesh = array_to_arraymesh(surface_array)
+	
+	array_mesh.surface_set_material(0, appearance.material)
 
 	return array_mesh
 

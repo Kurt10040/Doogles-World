@@ -48,8 +48,14 @@ fill_to = Vector2(1, 1)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yoq75"]
 texture = SubResource("GradientTexture2D_megsn")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_megsn"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.6156863)
+roughness = 0.46
+refraction_enabled = true
+
 [sub_resource type="BoxMesh" id="BoxMesh_megsn"]
-size = Vector3(0.2, 0.2, 0.2)
+material = SubResource("StandardMaterial3D_megsn")
 
 [sub_resource type="Animation" id="Animation_bhhdu"]
 length = 0.001
@@ -705,18 +711,18 @@ render_target_update_mode = 0
 [node name="Node3D" type="Node3D" parent="CraftingMenu/ItemPreview/SubViewportContainer/SubViewport" unique_id=1574880238]
 
 [node name="itemPreviewCam" type="Camera3D" parent="CraftingMenu/ItemPreview/SubViewportContainer/SubViewport/Node3D" unique_id=1892144597]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6608398)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.1626377)
 cull_mask = 1047554
 fov = 54.772045
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CraftingMenu/ItemPreview/SubViewportContainer/SubViewport/Node3D" unique_id=1761458461]
-transform = Transform3D(0.12110266, -0.052910194, -0.991029, -0.18095672, 0.98043525, -0.07446076, 0.97580063, 0.18838266, 0.10918427, 0, 0, 0)
+transform = Transform3D(0.15183404, 0.10223328, 0.98291683, -0.18067145, 0.9805245, -0.0740818, -0.9715368, -0.16636558, 0.16738915, 0, 0, 0)
 layers = 2
 mesh = SubResource("BoxMesh_megsn")
 script = ExtResource("9_megsn")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="CraftingMenu/ItemPreview/SubViewportContainer/SubViewport/Node3D" unique_id=1812966818]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5397587, 0.4262215, 0.6608398)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5397587, 0.4262215, 2.0833921)
 layers = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1159541500]

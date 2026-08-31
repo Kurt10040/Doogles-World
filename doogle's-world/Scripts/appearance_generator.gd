@@ -24,18 +24,26 @@ static func generate_appearance(stats:Stats)->Appearance:
 	
 	# create new Appearance class instance
 	var appearance:Appearance = Appearance.new()
+	appearance.material = StandardMaterial3D.new()
+	appearance.core = stats
 	
 	# Choose shape
 	if stats.item_class == stats.ItemClass.ORE and stats.type in [Stats.ItemType.METAL, Stats.ItemType.ROCK]:
 		#print("this a rock metal ore thingy")
 		appearance.shape = Appearance.ShapeArchetypes.ROCK
+		appearance.material.albedo_color = [Color.DIM_GRAY,Color.SADDLE_BROWN].pick_random()
 	else:
 		print("yea idk what shape this is supposed to have lol so here is a rock")
 		appearance.shape = Appearance.ShapeArchetypes.ROCK
+		appearance.material.albedo_color = [Color.DIM_GRAY,Color.SADDLE_BROWN, Color.AQUAMARINE, Color.BURLYWOOD, Color.CHARTREUSE, Color.DARK_GREEN].pick_random()
 
 	# Faceted geometry and normals
 	if appearance.shape == Appearance.ShapeArchetypes.CRYSTAL or stats.item_class == Stats.ItemClass.CRYSTAL:
 		appearance.faceted = true
+		appearance.material.albedo_color = [Color.WHITE, Color.AQUA, Color.BLUE_VIOLET].pick_random()
+		appearance.material.albedo_color.a = randf_range(0.4,0.8)
+		appearance.material.roughness = randf_range(0.05,0.4)
+		appearance.material.refraction_enabled = true
 
 	# Edit appearance based on item type
 	if stats.type == Stats.ItemType.ROCK:

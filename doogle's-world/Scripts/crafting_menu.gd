@@ -199,6 +199,10 @@ func _on_craft_button_pressed() -> void:
 	var new_item:Stats = TransmutationSystem.combine(item1_stats,item2_stats,{})
 	new_item.init_current_properties()
 	
+	new_item.mesh = MeshGenerator.generate_item_mesh(new_item)
+	
+	print(new_item.get_data_as_dict())
+	
 	# Show the item preview
 	preview_mesh.mesh = new_item.mesh
 	
@@ -214,8 +218,7 @@ func _on_craft_button_pressed() -> void:
 	result_type.text = str(Stats.ItemType.keys()[new_item.type]).lstrip("_")
 	result_class.text = str(Stats.ItemClass.keys()[new_item.item_class]).lstrip("_")
 	
-	#item_rarity.text = "[b][i]" + str(Stats.ItemRarity.keys()[item["rarity"]]).lstrip("_") + "[/i][/b]"
-	#item_rarity.add_theme_color_override("default_color", rarity_colors[item["rarity"]])
+	result_name.add_theme_color_override("default_color", Global.rarity_colors[new_item["rarity"]])
 	
 	#if new_item.is_shiny == true:
 		#shiny_background.visible = true

@@ -18,13 +18,13 @@ static func combine(item_a:Stats, item_b:Stats, environment: Dictionary) -> Stat
 	# Determine enchantments
 	result_item = determine_class_and_type(result_item,item_a,item_b)
 	result_item = determine_tags(result_item,item_a,item_b)
-	result_item = determine_rarity(result_item)
+	result_item = determine_rarity(result_item, item_a, item_b)
 	# Determine name
 	result_item.name = item_a.name+item_b.name
 	
 	# Generate appearance
-	var appearance = AppearanceGenerator.generate_appearance(result_item)
-	var result_mesh = MeshGenerator.generate_item_mesh(result_item)
+	#var appearance = AppearanceGenerator.generate_appearance(result_item)
+	#var result_mesh = MeshGenerator.generate_item_mesh(result_item)
 	
 	# Return final transmutated item
 	return result_item
@@ -107,6 +107,16 @@ static func apply_builtin_recipes(result:Stats,item_a:Stats,item_b:Stats) -> Sta
 	return result
 	
 static func determine_class_and_type(result:Stats,item_a:Stats,item_b:Stats) -> Stats:
+	if item_a.type == item_b.type:
+		result.type = item_a.type
+	else:
+		result.type = [item_a.type,item_b.type].pick_random()
+	
+	if item_a.item_class == item_b.item_class:
+		result.item_class = item_a.item_class
+	else:
+		result.item_class = [item_a.item_class,item_b.item_class].pick_random()
+	
 	return result
 
 static func determine_tags(result:Stats,item_a:Stats,item_b:Stats) -> Stats:
@@ -118,7 +128,10 @@ static func determine_tags(result:Stats,item_a:Stats,item_b:Stats) -> Stats:
 	
 	return result
 	
-static func determine_rarity(result:Stats) -> Stats:
+static func determine_rarity(result:Stats, item_a:Stats, item_b:Stats) -> Stats:
+	var new_rarity:int = (item_a.rarity as int + item_b.rarity as int)/2
+	result.rarity = Stats.ItemRarity.values()[new_rarity]
+	
 	return result
 
 static func determine_appearance(result:Stats):
