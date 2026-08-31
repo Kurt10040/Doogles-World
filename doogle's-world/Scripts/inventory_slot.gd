@@ -8,13 +8,16 @@ extends Control
 @onready var item_name:Label = $DetailsPanel/ItemName
 @onready var item_type:Label = $DetailsPanel/ItemType
 @onready var item_class:Label = $DetailsPanel/ItemClass
-@onready var item_rarity:Label = $DetailsPanel/ItemRarity
+@onready var item_rarity:RichTextLabel = $DetailsPanel/ItemRarity2
 @onready var item_mass:Label = $DetailsPanel/ItemMass
+@onready var shiny_background:Panel = $DetailsPanel/ShinyBackground
+
 
 @onready var slot_label: Label = $outer_border/SlotLabel
 
 @onready var item_icon := $outer_border/ItemIcon
 @onready var audio_player:AudioStreamPlayer = $AudioStreamPlayer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 signal drag_start(slot)
 signal drag_end()
@@ -23,9 +26,13 @@ var item = null
 var hotbar_slot:int = -1
 var inventory_slot_index:int = -1
 
+var can_drop = true
+
 func _ready() -> void:
 	audio_player.stream = load("res://Assets/Sounds/SFX/click2.ogg")
 	audio_player.volume_db = -30
+	
+	outer_border.scale = Vector2.ONE
 
 # set hotbar index
 func set_hotbar_slot(new_index:int)->void:
@@ -42,10 +49,13 @@ func _on_item_button_mouse_entered():
 	audio_player.play()
 	if item != null:
 		details_panel.visible = true
+		animation_player.play("new_animation")
 
 # when the player stops hovering over the item slot
 func _on_item_button_mouse_exited():
 	details_panel.visible = false
+	animation_player.stop()
+	outer_border.scale = Vector2.ONE
 
 # Reset the inventory slot to empty
 func set_empty()->void:
@@ -58,16 +68,23 @@ func set_item(new_item:Dictionary)->void:
 	item = new_item
 	qty_label.text = str(item["quantity"])
 	item_name.text = str(item["name"])
-	item_mass.text = str(item["mass"])
+	item_mass.text = str(item["mass"]) + "kg"
 	item_type.text = str(Stats.ItemType.keys()[item["type"]]).lstrip("_")
 	item_class.text = str(Stats.ItemClass.keys()[item["class"]]).lstrip("_")
-	item_rarity.text = str(Stats.ItemRarity.keys()[item["rarity"]]).lstrip("_")
+	item_rarity.text = "[b][i]" + str(Stats.ItemRarity.keys()[item["rarity"]]).lstrip("_") + "[/i][/b]"
+	
+	item_rarity.add_theme_color_override("default_color", Global.rarity_colors[item["rarity"]])
+	
+	if item["shiny"] == true:
+		shiny_background.visible = true
+	else:
+		shiny_background.visible = false
 	
 	slot_label.text = str(item["name"])
 
 func _on_item_button_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed() and can_drop:
 			if item != null:
 				var drop = false
 				if hotbar_slot != -1:

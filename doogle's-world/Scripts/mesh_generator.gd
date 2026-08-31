@@ -9,7 +9,6 @@ static func generate_item_mesh(item_stats:Stats)->ArrayMesh:
 	#appearance.scale = Vector3(1.6,1.2,1)
 	#appearance.scale = Vector3(2,2,2)
 	appearance.noise_seed = randi_range(1,100)
-	print(appearance.noise_seed)
 	#appearance.shape = Appearance.ShapeArchetypes.BLOB
 	
 	var surface_array:Array

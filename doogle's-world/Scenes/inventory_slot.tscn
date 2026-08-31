@@ -2,10 +2,11 @@
 
 [ext_resource type="Script" uid="uid://thi6fy4duwxw" path="res://Scripts/inventory_slot.gd" id="1_0v82l"]
 [ext_resource type="Texture2D" uid="uid://dxlyrowutwh17" path="res://Assets/Textures/diamond_pickaxe.png" id="2_0cu6i"]
-[ext_resource type="FontFile" uid="uid://cdvdoq5qhte7d" path="res://Assets/nk57-monospace-cd-rg.ttf" id="3_pnayc"]
+[ext_resource type="FontFile" uid="uid://cdvdoq5qhte7d" path="res://Assets/Fonts/nk57-monospace-cd-rg.ttf" id="3_pnayc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pnayc"]
 bg_color = Color(0, 0, 0, 0.2784314)
+border_color = Color(0.43167716, 0.8700557, 0.98354656, 1)
 corner_radius_top_left = 9
 corner_radius_top_right = 9
 corner_radius_bottom_right = 9
@@ -16,6 +17,102 @@ font = ExtResource("3_pnayc")
 font_size = 29
 font_color = Color(0, 0, 0, 1)
 outline_size = 3
+
+[sub_resource type="Gradient" id="Gradient_pnayc"]
+offsets = PackedFloat32Array(0, 0.19506727, 0.31614348, 0.42825112, 0.60762334, 0.6838565, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.63, 0.63, 0.63, 0, 0.8, 0.8, 0.8, 0.2, 0.84, 0.84, 0.84, 0, 1, 1, 1, 0.14901961, 0.9533334, 0.9533334, 0.9533334, 0.2240523, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6h8ck"]
+gradient = SubResource("Gradient_pnayc")
+fill_from = Vector2(0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ewbek"]
+texture = SubResource("GradientTexture2D_6h8ck")
+
+[sub_resource type="Animation" id="Animation_pnayc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DetailsPanel:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DetailsPanel:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("outer_border:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.1, 1.1)]
+}
+
+[sub_resource type="Animation" id="Animation_6h8ck"]
+resource_name = "new_animation"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DetailsPanel:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.20233412, 0.3),
+"transitions": PackedFloat32Array(0.48296818, 1, 1),
+"update": 0,
+"values": [1.5707964, 0.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DetailsPanel:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.20000845, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("outer_border:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.09302718, 0.23333333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1.1, 1.1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ewbek"]
+_data = {
+&"RESET": SubResource("Animation_pnayc"),
+&"new_animation": SubResource("Animation_6h8ck")
+}
 
 [node name="InventorySlot" type="Control" unique_id=185177490]
 custom_minimum_size = Vector2(100, 100)
@@ -38,6 +135,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.1, 1.1)
+pivot_offset_ratio = Vector2(0.5, 0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_pnayc")
 
 [node name="TextureRect" type="TextureRect" parent="outer_border" unique_id=58350517]
@@ -123,15 +222,32 @@ visible = false
 layout_mode = 0
 offset_top = -100.0
 offset_right = 175.0
-color = Color(0.16924527, 0.1692453, 0.16924527, 1)
+pivot_offset_ratio = Vector2(0, 1)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="ShinyBackground" type="Panel" parent="DetailsPanel" unique_id=252400155]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -83.5
+offset_top = -46.0
+offset_right = 83.5
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ewbek")
 
 [node name="ItemName" type="Label" parent="DetailsPanel" unique_id=1809159688]
 layout_mode = 1
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 135.0
-offset_bottom = 35.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 133.0
+offset_bottom = 36.0
 theme_override_font_sizes/font_size = 20
+text = "HIHI"
 vertical_alignment = 1
 
 [node name="ItemType" type="Label" parent="DetailsPanel" unique_id=405174774]
@@ -145,6 +261,7 @@ offset_right = 55.0
 offset_bottom = 6.0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 11
+text = "IIWIW"
 vertical_alignment = 1
 
 [node name="ItemClass" type="Label" parent="DetailsPanel" unique_id=2070771473]
@@ -158,20 +275,24 @@ offset_right = -10.0
 offset_bottom = 33.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 11
+text = "IDK"
 horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="ItemRarity" type="Label" parent="DetailsPanel" unique_id=1387277242]
+visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = -23.0
-offset_right = 101.0
+offset_left = 11.0
+offset_top = -25.0
+offset_right = 102.0
+offset_bottom = -9.0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 11
-vertical_alignment = 2
+text = "Common"
+vertical_alignment = 1
 
 [node name="ItemMass" type="Label" parent="DetailsPanel" unique_id=985720638]
 layout_mode = 1
@@ -181,15 +302,34 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -70.0
-offset_top = -23.0
+offset_top = -26.0
 offset_right = -10.0
+offset_bottom = -10.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 0.48235294)
 theme_override_font_sizes/font_size = 11
+text = "00.000kg"
 horizontal_alignment = 2
-vertical_alignment = 2
+vertical_alignment = 1
+
+[node name="ItemRarity2" type="RichTextLabel" parent="DetailsPanel" unique_id=1312163446]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 75.0
+offset_right = 114.0
+offset_bottom = 91.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/bold_italics_font_size = 11
+bbcode_enabled = true
+text = "[b][i]Junk[/i][/b]"
+fit_content = true
+scroll_active = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1305518312]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1567674295]
+libraries/ = SubResource("AnimationLibrary_ewbek")
 
 [connection signal="gui_input" from="ItemButton" to="." method="_on_item_button_gui_input"]
 [connection signal="mouse_entered" from="ItemButton" to="." method="_on_item_button_mouse_entered"]

@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bpuk50ei16cwd" path="res://Scenes/equipment_slot.tscn" id="5_52ee3"]
 [ext_resource type="PackedScene" uid="uid://cljisgrv0dyd1" path="res://Scenes/inventory_hotbar.tscn" id="6_nn08x"]
 [ext_resource type="Script" uid="uid://bqtoigpcf2t1f" path="res://Scripts/crafting_menu.gd" id="8_bhhdu"]
+[ext_resource type="Script" uid="uid://h0f3jw5m70k0" path="res://Scripts/item_preview.gd" id="9_megsn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kyqiw"]
 radius = 0.56103516
@@ -32,6 +33,252 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="Gradient" id="Gradient_bhhdu"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.1225, 0.7325)
+colors = PackedColorArray(1, 1, 0.6745098, 0.35686275, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_megsn"]
+gradient = SubResource("Gradient_bhhdu")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yoq75"]
+texture = SubResource("GradientTexture2D_megsn")
+
+[sub_resource type="BoxMesh" id="BoxMesh_megsn"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="Animation" id="Animation_bhhdu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CraftingMenu/outer_frame:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CraftingMenu/ColorRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HUD:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CraftingMenu/ColorRect:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("InventoryHotbar:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CraftingMenu/ItemPreview:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CraftingMenu/ItemPreview/Close:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CraftingMenu/ItemPreview/Glow:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CraftingMenu/ItemPreview/SubViewportContainer:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_megsn"]
+resource_name = "new_crafted"
+length = 5.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CraftingMenu/outer_frame:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CraftingMenu/ColorRect:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.39999998, 1.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HUD:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CraftingMenu/ColorRect:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.39999998),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("InventoryHotbar:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CraftingMenu/ItemPreview:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CraftingMenu/ItemPreview/Close:modulate")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(4.5, 5.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CraftingMenu/ItemPreview/Glow:modulate")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.7, 3.4666667),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CraftingMenu/ItemPreview/SubViewportContainer:scale")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(2, 2.5),
+"transitions": PackedFloat32Array(0.45062527, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yoq75"]
+_data = {
+&"RESET": SubResource("Animation_bhhdu"),
+&"new_crafted": SubResource("Animation_megsn")
+}
 
 [node name="Player" type="CharacterBody3D" unique_id=646272981 groups=["Player"]]
 process_mode = 3
@@ -232,6 +479,7 @@ horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="CraftingMenu" type="CanvasLayer" parent="." unique_id=1910111784]
+visible = false
 
 [node name="outer_frame" type="Panel" parent="CraftingMenu" unique_id=1650616236]
 custom_minimum_size = Vector2(100, 100)
@@ -246,7 +494,22 @@ offset_right = 476.0
 offset_bottom = 255.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_bhhdu")
+
+[node name="Label" type="Label" parent="CraftingMenu/outer_frame" unique_id=1118661674]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_right = 128.0
+offset_bottom = 76.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 45
+text = "Crafting"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Crafting" type="Control" parent="CraftingMenu/outer_frame" unique_id=2030506754]
 layout_mode = 1
@@ -293,7 +556,19 @@ offset_top = -45.0
 offset_right = 460.0
 offset_bottom = 214.0
 
+[node name="ResultName2" type="RichTextLabel" parent="CraftingMenu/outer_frame/Crafting/ResultStats" unique_id=8710413]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 368.0
+offset_bottom = 47.0
+theme_override_font_sizes/bold_italics_font_size = 23
+bbcode_enabled = true
+text = "[b][i]Name[/i][/b]"
+scroll_active = false
+
 [node name="ResultName" type="Label" parent="CraftingMenu/outer_frame/Crafting/ResultStats" unique_id=492593193]
+visible = false
 layout_mode = 0
 offset_left = 15.0
 offset_top = 15.0
@@ -334,7 +609,7 @@ theme_override_colors/font_color = Color(0.41674656, 0.4167466, 0.41674656, 1)
 text = "00.000kg"
 vertical_alignment = 2
 
-[node name="Button" type="Button" parent="CraftingMenu/outer_frame/Crafting" unique_id=13209104]
+[node name="CraftButton" type="Button" parent="CraftingMenu/outer_frame/Crafting" unique_id=13209104]
 layout_mode = 0
 offset_left = 295.0
 offset_top = -150.0
@@ -342,20 +617,6 @@ offset_right = 460.0
 offset_bottom = -50.0
 theme_override_font_sizes/font_size = 53
 text = "Craft"
-
-[node name="Label" type="Label" parent="CraftingMenu/outer_frame" unique_id=1118661674]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -128.0
-offset_right = 128.0
-offset_bottom = 76.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 45
-text = "Crafting"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="CloseButton" type="Button" parent="CraftingMenu/outer_frame" unique_id=1045508798]
 layout_mode = 1
@@ -369,7 +630,104 @@ offset_bottom = 41.000004
 grow_horizontal = 0
 text = "Close"
 
+[node name="ColorRect" type="ColorRect" parent="CraftingMenu" unique_id=2012473952]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5882353)
+
+[node name="ItemPreview" type="Control" parent="CraftingMenu" unique_id=2026923126]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Close" type="Button" parent="CraftingMenu/ItemPreview" unique_id=409238121]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -43.333008
+offset_top = -90.96503
+offset_right = 43.33362
+offset_bottom = -38.965027
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Close"
+
+[node name="Glow" type="Panel" parent="CraftingMenu/ItemPreview" unique_id=1365828042]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yoq75")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CraftingMenu/ItemPreview" unique_id=1674157225]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="SubViewport" type="SubViewport" parent="CraftingMenu/ItemPreview/SubViewportContainer" unique_id=1842018374]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(256, 256)
+render_target_update_mode = 0
+
+[node name="Node3D" type="Node3D" parent="CraftingMenu/ItemPreview/SubViewportContainer/SubViewport" unique_id=1574880238]
+
+[node name="itemPreviewCam" type="Camera3D" parent="CraftingMenu/ItemPreview/SubViewportContainer/SubViewport/Node3D" unique_id=1892144597]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6608398)
+cull_mask = 1047554
+fov = 54.772045
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CraftingMenu/ItemPreview/SubViewportContainer/SubViewport/Node3D" unique_id=1761458461]
+transform = Transform3D(0.12110266, -0.052910194, -0.991029, -0.18095672, 0.98043525, -0.07446076, 0.97580063, 0.18838266, 0.10918427, 0, 0, 0)
+layers = 2
+mesh = SubResource("BoxMesh_megsn")
+script = ExtResource("9_megsn")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CraftingMenu/ItemPreview/SubViewportContainer/SubViewport/Node3D" unique_id=1812966818]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5397587, 0.4262215, 0.6608398)
+layers = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1159541500]
+libraries/ = SubResource("AnimationLibrary_yoq75")
+
+[node name="CraftingSounds" type="AudioStreamPlayer" parent="." unique_id=1019242139]
+volume_db = -25.0
+
+[connection signal="pressed" from="CraftingMenu/outer_frame/Crafting/CraftButton" to="CraftingMenu/outer_frame/Crafting" method="_on_craft_button_pressed"]
 [connection signal="pressed" from="CraftingMenu/outer_frame/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="CraftingMenu/ItemPreview/Close" to="CraftingMenu/outer_frame/Crafting" method="_on_close_pressed"]
 
 [editable path="PlayerMesh"]
 [editable path="InteractComponent"]

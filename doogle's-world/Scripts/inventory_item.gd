@@ -45,7 +45,7 @@ func _process(_delta: float) -> void:
 			var parent_body:RigidBody3D = self.get_parent_node_3d()
 			if distance < 5:
 				direction = direction.normalized()
-				var force = direction * 50
+				var force = direction * (50 + ((5 - distance) * 35))
 				
 				# Apply the force to the center of the rigid body
 				parent_body.apply_central_force(force)

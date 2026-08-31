@@ -5,12 +5,29 @@ extends Control
 @onready var slot_container: HBoxContainer = $Panel/SlotContainer
 @onready var hotbar_container: HBoxContainer = $"../../../InventoryHotbar/InventoryHotbar/HBoxContainer"
 
+@onready var item_preview: Control = $"../../ItemPreview"
+@onready var preview_mesh: MeshInstance3D = $"../../ItemPreview/SubViewportContainer/SubViewport/Node3D/MeshInstance3D"
+
+
+@onready var craft_button: Button = $CraftButton
+
+@onready var result_name: RichTextLabel = $ResultStats/ResultName2
+@onready var result_class: Label = $ResultStats/ResultClass
+@onready var result_type: Label = $ResultStats/ResultType
+@onready var result_weight: Label = $ResultStats/ResultWeight
+
+@onready var animation_player: AnimationPlayer = $"../../../AnimationPlayer"
+@onready var crafting_sounds: AudioStreamPlayer = $"../../../CraftingSounds"
+const SHINY_SFX = preload("uid://dpeljsiepkwh4")
+
 
 @export var grid_size:int = 4
 var dragged_slot:Control = null
 
 var item_1:Control = null
 var item_2:Control = null
+
+var crafting_result:Stats = null
 
 
 # Called when the node enters the scene tree for the first time.
@@ -68,19 +85,28 @@ func _on_drag_end():
 	
 	dragged_slot = null # clear the variable
 
+# Set the given slot as a slot to craft with
 func set_crafting_slot(slot:Control):
+	slot.can_drop = false
 	if item_1 == null and slot != item_2:
 		item_1 = slot
 		slot.reparent(slot_container)
+		return
 	elif item_1 != null and item_2 == null and item_1 != dragged_slot:
 		item_2 = slot
 		slot.reparent(slot_container)
+		return
 	elif slot == item_1:
 		item_1 = null
 		slot.reparent(grid_container)
+		return
 	elif slot == item_2:
 		item_2 = null
 		slot.reparent(grid_container)
+		return
+	
+	slot.can_drop = true
+	return
 
 # Get the slot that the mouse is hovering over
 func get_slot_under_mouse()->Dictionary:
@@ -133,3 +159,71 @@ func drop_slot(slot1:Control, slot2:Control, slot1_src:String, slot2_src:String)
 	else:
 		if Global.swap_inventory_items(slot1_index,slot2_index,slot1_src,slot2_src):
 			_on_inventory_update()
+
+
+func _on_craft_button_pressed() -> void:
+	# Debouce if there are no items to craft
+	if item_1 == null and item_2 == null:
+		return
+	
+	# Create the new item
+	var item1_stats:Stats = Stats.new()
+	var item2_stats:Stats = Stats.new()
+	
+	for key in item_1.item:
+		if key in item1_stats:
+			item1_stats.set(key, item_1.item[key])
+		else:
+			# Special cases for class, shiny and quantity because the names don't match
+			if key == "class":
+				item1_stats.set("item_class", item_1.item[key])
+			elif key == "shiny":
+				item1_stats.set("is_shiny", item_1.item[key])
+			elif key not in ["quantity","scene_path"]:
+				print("Unknown stat: ", key, " on item ", item_1.item["name"])
+	item1_stats.init_current_properties()
+	
+	for key in item_2.item:
+		if key in item2_stats:
+			item2_stats.set(key, item_2.item[key])
+		else:
+			# Special cases for class, shiny and quantity because the names don't match
+			if key == "class":
+				item2_stats.set("item_class", item_2.item[key])
+			elif key == "shiny":
+				item2_stats.set("is_shiny", item_2.item[key])
+			elif key not in ["quantity","scene_path"]:
+				print("Unknown stat: ", key, " on item ", item_2.item["name"])
+	item2_stats.init_current_properties()
+	
+	var new_item:Stats = TransmutationSystem.combine(item1_stats,item2_stats,{})
+	new_item.init_current_properties()
+	
+	# Show the item preview
+	preview_mesh.mesh = new_item.mesh
+	
+	animation_player.play("new_crafted")
+	if new_item.is_shiny:
+		crafting_sounds.stream = SHINY_SFX
+		crafting_sounds.play()
+	await animation_player.animation_finished
+	
+	# Update UI
+	result_name.text = "[b][i]" + str(new_item.name) + "[/i][/b]"
+	result_weight.text = str(new_item.mass) + "kg"
+	result_type.text = str(Stats.ItemType.keys()[new_item.type]).lstrip("_")
+	result_class.text = str(Stats.ItemClass.keys()[new_item.item_class]).lstrip("_")
+	
+	#item_rarity.text = "[b][i]" + str(Stats.ItemRarity.keys()[item["rarity"]]).lstrip("_") + "[/i][/b]"
+	#item_rarity.add_theme_color_override("default_color", rarity_colors[item["rarity"]])
+	
+	#if new_item.is_shiny == true:
+		#shiny_background.visible = true
+	#else:
+		#shiny_background.visible = false
+		
+
+
+# Close the item preview
+func _on_close_pressed() -> void:
+	animation_player.play("RESET")

@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cdvdoq5qhte7d"
-path="res://.godot/imported/nk57-monospace-cd-rg.ttf-22213cfa94b0d8a1aa8aab16642cbda5.fontdata"
+uid="uid://6c8rspt3xsh"
+path="res://.godot/imported/AveriaSerifLibre-Bold.ttf-75f42ecb760b48e54f48e03164f64753.fontdata"
 
 [deps]
 
-source_file="res://Assets/nk57-monospace-cd-rg.ttf"
-dest_files=["res://.godot/imported/nk57-monospace-cd-rg.ttf-22213cfa94b0d8a1aa8aab16642cbda5.fontdata"]
+source_file="res://Assets/Fonts/AveriaSerifLibre-Bold.ttf"
+dest_files=["res://.godot/imported/AveriaSerifLibre-Bold.ttf-75f42ecb760b48e54f48e03164f64753.fontdata"]
 
 [params]
 

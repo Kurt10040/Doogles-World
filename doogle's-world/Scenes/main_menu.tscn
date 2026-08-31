@@ -1,9 +1,7 @@
 [gd_scene format=4 uid="uid://bedvqufk6co40"]
 
 [ext_resource type="Script" uid="uid://dmfwvrlsh7du6" path="res://Scripts/main_menu.gd" id="1_5n0dv"]
-[ext_resource type="Script" uid="uid://boeob6r1de2gq" path="res://Scripts/teleport.gd" id="1_6m47u"]
 [ext_resource type="PackedScene" uid="uid://bhnwc2a0th6n3" path="res://Assets/Models/Spaceship5.fbx" id="2_84iac"]
-[ext_resource type="PackedScene" uid="uid://cesq0p027yb7f" path="res://Interaction/Interaction Area/interactable.tscn" id="3_5n0dv"]
 [ext_resource type="PackedScene" uid="uid://t7nfjqgkuxlg" path="res://Assets/Models/Rocks/Rock_4.fbx" id="4_ne6ao"]
 [ext_resource type="PackedScene" uid="uid://bw80h1kue48jj" path="res://Assets/Models/Rocks/Rock_Large_1.fbx" id="5_tt8ml"]
 [ext_resource type="PackedScene" uid="uid://cky3b81xukfwo" path="res://Assets/Models/Rocks/Rock_Large_2.fbx" id="6_fmarx"]
@@ -22,58 +20,10 @@
 [ext_resource type="ArrayMesh" uid="uid://2focjg26cvjo" path="res://Assets/Models/Rocks/Rock_Large_1.res" id="19_3533h"]
 [ext_resource type="ArrayMesh" uid="uid://ctere0qjclbwa" path="res://Assets/Models/Rocks/Rock_Large_2.res" id="20_dp8uv"]
 [ext_resource type="ArrayMesh" uid="uid://c8rphlu6854st" path="res://Assets/Models/Rocks/Rock_4.res" id="21_uu0lx"]
-[ext_resource type="PackedScene" uid="uid://bxdrik0ta5st0" path="res://Assets/Models/Plant_Small.fbx" id="22_ujm45"]
 [ext_resource type="PackedScene" uid="uid://b1ksmsjrri6g6" path="res://Assets/Models/roche.fbx" id="23_aj2v6"]
 [ext_resource type="PackedScene" uid="uid://8rxphsmmqa1i" path="res://Assets/Models/Resource_Rock_1.fbx" id="24_vj5y7"]
-[ext_resource type="Shader" uid="uid://fcvyydwoju2m" path="res://Assets/Shaders/blur.gdshader" id="25_84iac"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fevyy"]
-albedo_color = Color(0.5489433, 0.20802692, 0.24477106, 1)
-metallic = 0.71
-metallic_specular = 1.0
-roughness = 0.57
-emission_enabled = true
-emission = Color(0.54901963, 0.20784314, 0.24313726, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_3l6me"]
-material = SubResource("StandardMaterial3D_fevyy")
-top_radius = 0.9
-bottom_radius = 0.1
-height = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k12tt"]
-emission_enabled = true
-emission = Color(0.53999996, 0.8466666, 1, 1)
-emission_energy_multiplier = 3.06
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_y17f6"]
-material = SubResource("StandardMaterial3D_k12tt")
-bottom_radius = 6.44
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_hovqx"]
-size = Vector3(12.46843, 8.426178, 18.689209)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_pavwk"]
-size = Vector3(10.260376, 5.7668457, 16.654083)
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_4v5qc"]
-height = 6.036133
-radius = 3.8881836
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_w71i6"]
-size = Vector3(18.035889, 1.0961914, 1.7509766)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_tni0p"]
-size = Vector3(0.82177734, 5.9611206, 1.2237549)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_m8avj"]
-size = Vector3(4.3563232, 1.0961914, 12.189087)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_mldsx"]
-size = Vector3(17.62445, 1.0961914, 2.8156128)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_gvnub"]
-size = Vector3(14.135067, 10.004028, 5.178875)
+[ext_resource type="Texture2D" uid="uid://qhyeukwtvo68" path="res://Assets/Textures/logo.png" id="27_ne6ao"]
+[ext_resource type="FontFile" uid="uid://c3i368ds0ssau" path="res://Assets/Fonts/AveriaSerifLibre-Regular.ttf" id="28_tt8ml"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pdsj5"]
 albedo_color = Color(0.49275988, 0.27464142, 0.12100736, 1)
@@ -227,82 +177,240 @@ instance_count = 22
 mesh = ExtResource("21_uu0lx")
 buffer = PackedFloat32Array(-1.6365844, 7.340385e-08, 1.6792843, 60.019245, 0, 2.3448677, -1.02497424e-07, 0.3022232, -1.6792843, -7.153738e-08, -1.6365844, -234.95422, 1.617453, -7.514667e-08, -1.7191556, 61.27997, 0, 2.3604343, -1.0317786e-07, 1.2949829, 1.7191556, 7.070111e-08, 1.617453, -231.39699, 1.9725353, -8.527319e-08, -1.9508232, 61.905968, 0, 2.774276, -1.2126746e-07, 2.8848877, 1.9508232, 8.622226e-08, 1.9725353, -227.32913, 1.0855833, 6.2146155e-09, 0.14217383, 73.079315, 0, 1.0948536, -4.7857572e-08, 9.024597, -0.14217381, 4.745235e-08, 1.0855832, -208.87686, 0.6091854, 8.535305e-08, 1.9526502, 67.12544, 0, 2.0454705, -8.941036e-08, 9.0598755, -1.95265, 2.6628335e-08, 0.6091853, -210.56723, -1.0545397, 1.0849175e-08, 0.2482002, 63.864788, 0, 1.0833546, -4.7354934e-08, 7.7498703, -0.2482002, -4.6095394e-08, -1.0545397, -214.4755, -1.3675951, -3.9045e-08, -0.89324546, 35.73461, 0, 1.6334636, -7.140096e-08, 9.46743, 0.89324546, -5.977948e-08, -1.3675951, -201.99774, 0.5636429, -1.0901358e-07, -2.4939399, 42.252144, 0, 2.5568397, -1.11763015e-07, 8.094856, 2.4939399, 2.4637615e-08, 0.5636429, -196.06595, 1.1560323, -1.07902046e-07, -2.468511, 47.024242, 0, 2.7257946, -1.1914826e-07, 7.7236023, 2.468511, 5.0531778e-08, 1.1560323, -192.54381, 0.6874159, 4.9571547e-08, 1.1340648, 49.266056, 0, 1.3261386, -5.796736e-08, 8.36116, -1.1340649, 3.0047907e-08, 0.68741596, -184.56265, -1.4903815, 1.0297221e-07, 2.3557296, 35.834526, 0, 2.7875974, -1.2184975e-07, 7.871353, -2.3557296, -6.5146644e-08, -1.4903815, -191.66321, -2.1965988, 3.0237455e-08, 0.6917524, 39.759644, 0, 2.3029475, -1.00665034e-07, 8.02597, -0.6917524, -9.601638e-08, -2.1965988, -193.75705, 0.2725754, -6.017682e-08, -1.3766853, 50.393814, 0, 1.40341, -6.1345e-08, 8.439163, 1.3766853, 1.191465e-08, 0.2725754, -186.97897, 2.2123973, 8.726354e-08, 1.996357, 54.081215, 0, 2.9799569, -1.3025806e-07, 9.011215, -1.996357, 9.670696e-08, 2.2123973, -185.10506, 0.0049479627, 7.506522e-08, 1.7172922, 38.94316, 0, 1.7172989, -7.5065515e-08, 7.8114014, -1.7172922, 2.1628233e-10, 0.0049479627, -189.82385, -0.87578, 1.2429531e-07, 2.8435452, 30.043251, 0, 2.9753554, -1.3005692e-07, 8.929108, -2.8435452, -3.828156e-08, -0.87578, -210.78885, 0.14743228, -6.11975e-08, -1.4000355, 26.372177, 0, 1.4077768, -6.153588e-08, 8.771881, 1.4000355, 6.44447e-09, 0.14743228, -210.51895, 0.7171833, 1.1058645e-07, 2.529923, 16.070644, 0, 2.6296124, -1.1494401e-07, 7.7607574, -2.5299227, 3.1349074e-08, 0.71718323, -211.17773, -1.6607414, 8.935342e-08, 2.044168, 6.8181305, 0, 2.6337588, -1.1512525e-07, 7.822159, -2.044168, -7.2593316e-08, -1.6607414, -213.63867, -1.1357508, -2.0958623e-08, -0.4794774, 5.4284897, 0, 1.2328131, -5.3887973e-08, 7.8883667, 0.4794774, -4.9645244e-08, -1.1357508, -211.91537, -2.0809236, -4.5910713e-08, -1.0503147, 5.634491, 0, 2.3309662, -1.0188977e-07, 8.080429, 1.0503148, -9.096007e-08, -2.0809238, -210.46986, 1.148219, -2.9587229e-08, -0.6768769, 8.768883, 0, 1.33288, -5.8262035e-08, 8.242584, 0.6768769, 5.0190245e-08, 1.148219, -209.31601)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fevyy"]
+albedo_color = Color(0.5489433, 0.20802692, 0.24477106, 1)
+metallic = 0.71
+metallic_specular = 1.0
+roughness = 0.57
+emission_enabled = true
+emission = Color(0.54901963, 0.20784314, 0.24313726, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3l6me"]
+material = SubResource("StandardMaterial3D_fevyy")
+top_radius = 0.9
+bottom_radius = 0.1
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k12tt"]
+emission_enabled = true
+emission = Color(0.53999996, 0.8466666, 1, 1)
+emission_energy_multiplier = 3.06
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_y17f6"]
+material = SubResource("StandardMaterial3D_k12tt")
+bottom_radius = 6.44
+
 [sub_resource type="Environment" id="Environment_5vh2r"]
 glow_enabled = true
-volumetric_fog_density = 0.0097
-adjustment_enabled = true
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ffqkl"]
 dof_blur_far_enabled = true
 dof_blur_far_distance = 1.46
 dof_blur_far_transition = 275.74
-dof_blur_near_enabled = true
 dof_blur_near_distance = 5.37
 dof_blur_near_transition = 242.63
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5n0dv"]
-shader = ExtResource("25_84iac")
-shader_parameter/blur_radius = 12
-shader_parameter/blur_strength = 10.0
+[sub_resource type="InputEventKey" id="InputEventKey_5n0dv"]
+device = -1
+keycode = 32
+unicode = 32
+
+[sub_resource type="InputEventKey" id="InputEventKey_ne6ao"]
+device = -1
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_tt8ml"]
+events = [SubResource("InputEventKey_5n0dv"), SubResource("InputEventKey_ne6ao")]
+
+[sub_resource type="Animation" id="Animation_tt8ml"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/PlayButton:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(520, 441.08)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/TextureRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(326, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/TextureRect:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.835, 0.835)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/TextureRect:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasLayer/PlayButton:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasLayer/PlayButton:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fmarx"]
+resource_name = "entry"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/PlayButton:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8833333, 1.7333333),
+"transitions": PackedFloat32Array(2.9281735, 0.26794347, 1),
+"update": 0,
+"values": [Vector2(520, -100), Vector2(520, 441.08), Vector2(520, 441.08)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/TextureRect:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.26666668, 1.15, 2),
+"transitions": PackedFloat32Array(2.462289, 0.4204483, 1),
+"update": 0,
+"values": [Vector2(326, -500), Vector2(326, 0), Vector2(326, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/TextureRect:rotation")
+tracks/2/interp = 4
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.6666667, 1.2666668, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.08726646, -0.08726646]
+}
+
+[sub_resource type="Animation" id="Animation_84iac"]
+resource_name = "playbutton_enter"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/PlayButton:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0009999999, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1)]
+}
+
+[sub_resource type="Animation" id="Animation_5n0dv"]
+resource_name = "playbutton_exit"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/PlayButton:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6m47u"]
+resource_name = "title_idle"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("CanvasLayer/TextureRect:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5, 10),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.835, 0.835), Vector2(0.9, 0.9), Vector2(0.835, 0.835)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/TextureRect:rotation")
+tracks/1/interp = 4
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5, 10),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.08726646, 0.08726646, -0.08726646]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hkdq0"]
+_data = {
+&"RESET": SubResource("Animation_tt8ml"),
+&"entry": SubResource("Animation_fmarx"),
+&"playbutton_enter": SubResource("Animation_84iac"),
+&"playbutton_exit": SubResource("Animation_5n0dv"),
+&"title_idle": SubResource("Animation_6m47u")
+}
 
 [node name="MainMenu" type="Node3D" unique_id=1000881732]
 script = ExtResource("1_5n0dv")
 
 [node name="Environment" type="Node3D" parent="." unique_id=1415400368]
-
-[node name="Spaceship" type="StaticBody3D" parent="Environment" unique_id=1567746513]
-transform = Transform3D(0.20735529, 0.09295943, 0.9738389, -0.19774218, 0.9789087, -0.051338978, -0.9580718, -0.18192361, 0.2213639, -21.314318, 10.384663, 22.89)
-script = ExtResource("1_6m47u")
-
-[node name="Spaceship5" parent="Environment/Spaceship" unique_id=670308814 instance=ExtResource("2_84iac")]
-transform = Transform3D(4.499998, -0.0021105558, -0.0026891828, 0.0021097064, 4.499999, -0.0014355332, 0.0026900768, 0.0014343914, 4.5, 0.000289917, -0.00049096346, -3.6239624e-05)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Spaceship/Spaceship5" unique_id=702792968]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 1.6615531, 1.1205826, -0.9832611)
-mesh = SubResource("CylinderMesh_3l6me")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Spaceship/Spaceship5" unique_id=1365590873]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -1.6818194, 1.1205827, -0.98326105)
-mesh = SubResource("CylinderMesh_3l6me")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Spaceship" unique_id=2089571937]
-transform = Transform3D(1.0000004, 0, 0, 0, -4.37114e-08, -1.0000001, 0, 1.0000002, -4.3711392e-08, -0.012297921, 1.932867, -11.299674)
-mesh = SubResource("CylinderMesh_y17f6")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Spaceship" unique_id=1533048526]
-transform = Transform3D(1, -2.6823056e-07, -2.1756377e-06, 2.6822934e-07, 1, -5.5739986e-07, 2.175638e-06, 5.573993e-07, 1, -0.22470665, 3.7130613, -3.9615526)
-shape = SubResource("BoxShape3D_hovqx")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Environment/Spaceship" unique_id=277392002]
-transform = Transform3D(0.99827117, 0.056225214, -0.017021105, -0.058737382, 0.960012, -0.27372694, 0.00095045567, 0.27425456, 0.9616561, -0.20073509, 1.9517536, 12.935471)
-shape = SubResource("BoxShape3D_pavwk")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Environment/Spaceship" unique_id=228962204]
-transform = Transform3D(0.9756715, -0.02110961, -0.21821874, -0.21816418, 0.0048816795, -0.9758999, 0.02166614, 0.9997652, 0.00015755546, 7.6763535, 5.2291455, -0.50508976)
-shape = SubResource("CylinderShape3D_4v5qc")
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Environment/Spaceship" unique_id=800093489]
-transform = Transform3D(0.9999895, 8.195639e-08, 3.427267e-07, 2.6077032e-08, 0.9999938, 2.7939677e-09, 2.9802322e-07, 5.5739656e-07, 0.9999995, 14.916618, 1.9828293, -4.0699024)
-shape = SubResource("BoxShape3D_w71i6")
-
-[node name="CollisionShape3D7" type="CollisionShape3D" parent="Environment/Spaceship" unique_id=1556496568]
-transform = Transform3D(1, -2.1979965e-07, -1.8328968e-06, 2.1979862e-07, 1, -5.5739986e-07, 1.8328969e-06, 5.5739946e-07, 1, 23.52355, 4.4152775, -4.254897)
-shape = SubResource("BoxShape3D_tni0p")
-
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Environment/Spaceship" unique_id=811517195]
-transform = Transform3D(1, -1.7509377e-07, -1.4603497e-06, 1.7509296e-07, 1, -5.573999e-07, 1.4603498e-06, 5.573997e-07, 1, 8.076899, 1.9828279, -1.8792953)
-shape = SubResource("BoxShape3D_m8avj")
-
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Environment/Spaceship" unique_id=1034416537]
-transform = Transform3D(0.9287812, 0.037028156, 0.3687415, -0.035303622, 0.9993051, -0.011422105, -0.3689053, -0.0024090204, 0.92946124, 13.66788, 2.4138563, -0.090569496)
-shape = SubResource("BoxShape3D_mldsx")
-
-[node name="Interactable" parent="Environment/Spaceship" unique_id=716970301 instance=ExtResource("3_5n0dv")]
-interact_name = "Go to Base"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Spaceship/Interactable" unique_id=532459068]
-transform = Transform3D(1.0000006, -9.983778e-07, -7.748604e-07, 1.4901161e-07, 1.0000105, -1.5683472e-06, 1.3560057e-06, 4.0605664e-07, 1.0000021, 0.24274063, 4.5019937, -10.978922)
-shape = SubResource("BoxShape3D_gvnub")
 
 [node name="TallRocks" type="Node3D" parent="Environment" unique_id=1568682409]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.471892, 11.109516, 16.56107)
@@ -475,6 +583,7 @@ script = ExtResource("16_pddej")
 mesh_path = "uid://c8rphlu6854st"
 
 [node name="FoliageMultiMesh" type="MultiMeshInstance3D" parent="Environment/Foliage" unique_id=1666448574]
+visible = false
 multimesh = SubResource("MultiMesh_ahukf")
 
 [node name="_MultiMeshInstance3D_73717" type="MultiMeshInstance3D" parent="Environment/Foliage" unique_id=91383753]
@@ -493,14 +602,6 @@ multimesh = SubResource("MultiMesh_hcedr")
 [node name="_MultiMeshInstance3D_84610" type="MultiMeshInstance3D" parent="Environment/Foliage" unique_id=799361355]
 multimesh = SubResource("MultiMesh_nrlkg")
 
-[node name="Plant_Small" parent="Environment/Foliage" unique_id=1120180197 instance=ExtResource("22_ujm45")]
-transform = Transform3D(-3.604575, 0, 1.1530997, 0, 3.7845206, 0, -1.1530997, 0, -3.604575, -136.04283, 10.521582, -118.16847)
-metadata/asset_placer_res_id = "uid://bxdrik0ta5st0"
-
-[node name="Plant_Small (1)" parent="Environment/Foliage" unique_id=937902935 instance=ExtResource("22_ujm45")]
-transform = Transform3D(-2.0265586, 0, -1.2578399, 0, 2.3851829, 0, 1.2578399, 0, -2.0265586, -135.11472, 10.139841, -120.676636)
-metadata/asset_placer_res_id = "uid://bxdrik0ta5st0"
-
 [node name="roche" parent="Environment/Foliage" unique_id=283463290 instance=ExtResource("23_aj2v6")]
 transform = Transform3D(0.77771753, 0, 0.6286138, 0, 1, 0, -0.6286138, 0, 0.77771753, -80.47862, 11.55422, -4.6769705)
 metadata/asset_placer_res_id = "uid://b1ksmsjrri6g6"
@@ -512,6 +613,21 @@ metadata/asset_placer_res_id = "uid://8rxphsmmqa1i"
 [node name="Resource_Rock_1 (1)" parent="Environment/Foliage" unique_id=226473928 instance=ExtResource("24_vj5y7")]
 transform = Transform3D(-5.986206, 0, -0.9318802, 0, 6.058304, 0, 0.9318802, 0, -5.986206, -143.51389, 11.56887, -117.65694)
 metadata/asset_placer_res_id = "uid://8rxphsmmqa1i"
+
+[node name="Spaceship5" parent="Environment" unique_id=670308814 instance=ExtResource("2_84iac")]
+transform = Transform3D(0.9359142, 0.41927654, 4.381584, -0.88791233, 4.405432, -0.23189889, -4.3111095, -0.8163165, 0.99897516, -21.314339, 10.384127, 22.889803)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Spaceship5" unique_id=702792968]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 1.6615531, 1.1205826, -0.9832611)
+mesh = SubResource("CylinderMesh_3l6me")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Spaceship5" unique_id=1365590873]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -1.6818194, 1.1205827, -0.98326105)
+mesh = SubResource("CylinderMesh_3l6me")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment" unique_id=2089571937]
+transform = Transform3D(0.20735537, 0.97383916, -0.09295948, -0.19774225, -0.05133903, -0.97890884, -0.9580722, 0.22136398, 0.18192361, -32.14125, 12.859308, 20.048807)
+mesh = SubResource("CylinderMesh_y17f6")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=93655857]
 environment = SubResource("Environment_5vh2r")
@@ -536,28 +652,52 @@ fov = 88.8
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=664322010]
 
 [node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1532190528]
-material = SubResource("ShaderMaterial_5n0dv")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="CanvasLayer" unique_id=1398698998]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=681779882]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = -4.0
-offset_right = 4.0
-offset_bottom = 4.0
+offset_left = -250.0
+offset_top = -324.0
+offset_right = 250.0
+offset_bottom = 176.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.835, 0.835)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("27_ne6ao")
+
+[node name="PlayButton" type="Button" parent="CanvasLayer" unique_id=1398698998]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = 117.07999
+offset_right = 58.5495
+offset_bottom = 194.08008
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0.6284615, 0.88106334, 0.68918693, 1)
+theme_override_colors/font_outline_color = Color(0.094500005, 0.15, 0.12595, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("28_tt8ml")
+theme_override_font_sizes/font_size = 50
+shortcut = SubResource("Shortcut_tt8ml")
 text = "Play"
+flat = true
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=842430564]
+visible = false
 modulate = Color(1, 1, 1, 0)
 z_index = 99
 anchors_preset = 15
@@ -570,7 +710,12 @@ color = Color(0, 0, 0, 1)
 [node name="bg_music_player" type="AudioStreamPlayer" parent="." unique_id=867483507]
 autoplay = true
 
-[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1225447799]
+libraries/ = SubResource("AnimationLibrary_hkdq0")
+
+[connection signal="mouse_entered" from="CanvasLayer/PlayButton" to="." method="_on_play_button_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/PlayButton" to="." method="_on_play_button_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/PlayButton" to="." method="_on_button_pressed"]
 
 [editable path="Environment/TallRocks/crystal_13"]
 [editable path="Environment/Trees/Resource_PineTree_Group"]

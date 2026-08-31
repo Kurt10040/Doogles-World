@@ -88,6 +88,15 @@ var spawnables = [
 	},
 ]
 
+var rarity_colors = [
+	Color.from_string("#676767",Color.WHITE), # Junk
+	Color.from_string("#41a641",Color.WHITE), # Common
+	Color.from_string("#5082de",Color.WHITE), # Uncommon
+	Color.from_string("#b32929",Color.WHITE), # Rare
+	Color.from_string("#f0b41d",Color.WHITE), # Legendary
+	Color.from_string("#cc33f2",Color.WHITE), # Divine
+	Color.from_string("#000000",Color.WHITE), # Secret
+]
 
 func _ready()->void:
 	# get root scene for scene switcher

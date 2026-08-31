@@ -13,8 +13,3 @@ func _on_interact() -> void:
 		print("The player wants to craft...")
 		Global.player_node.find_child("CraftingMenu").visible = true
 		Global.player_node.find_child("InventoryUI").visible = false
-		
-		if (Global.hotbar_inventory[0] != null and Global.hotbar_inventory[1] != null) or Global.inventory.size() >= 2:
-			print("theres stuff in ur hotbar too")
-		else:
-			print("not enough items in inventory")
